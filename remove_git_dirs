@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "recursively removing .git folders from"
+pwd
+rm -rf `find . -name .git`
+rm -rf `find . -name .gitignore`

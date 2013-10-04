@@ -1,0 +1,2 @@
+#!/bin/bash
+links -dump http://megaslownik.pl/slownik/polsko_angielski/$1 | grep "\[IMG\]>>" | sed -e 's/\[IMG\]//'

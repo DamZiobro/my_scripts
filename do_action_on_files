@@ -1,0 +1,16 @@
+#/bin/bash
+COUNT=`eval find ./ | grep ".pcap" | wc -l`
+PWD=`pwd`
+
+for i in `seq 1 $COUNT`
+do
+ FILE=`eval find ./ | grep ".pcap$" | head -n $i | tail -n 1`
+ 
+ echo "Processing $FILE ..." 
+
+h264AnnexBExtraction -r $FILE -b $FILE.264
+ffmpeg -i $FILE.264 -f avi $FILE.avi
+
+ cd $PWD;
+done
+

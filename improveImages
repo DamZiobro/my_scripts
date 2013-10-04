@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for f in $1/*.JPG $1/*.jpg $1/.PNG $1/.png $1/*.JPEG $1/*.jpeg
+do
+ echo "Processing file: $f"
+ convert -brightness-contrast 0x10% -modulate 100,115,100 $f $f
+done

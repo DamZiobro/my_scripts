@@ -1,0 +1,19 @@
+#!/usr/bin/python 
+
+import os 
+import sys 
+import glob 
+
+directory = sys.argv[1] 
+dotFiles = glob.glob(directory + "/*.dot")
+
+for dotFile in dotFiles:
+    #convert only renderPipeline files 
+    if("renderPipeline" in dotFile):
+       print "Converting file: " + dotFile
+       pngBasename = dotFile.split('.')[-2]
+       command  = "dot " + dotFile + " -Tpng -o " + directory + "/" + pngBasename + ".png"
+       os.system(command) 
+
+print ("\n\n   Converting finished successfully\n\n");
+    

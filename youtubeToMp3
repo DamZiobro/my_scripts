@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#downloadLink=$1
+#youtube-dl $downloadLink --extract-audio --audio-format mp3 --audio-quality 0 -o "%(title)s.mp3"
+
+x=/tmp/youtube-dl-$(date +%y.%m.%d_%H.%M.%S)-$RANDOM.flv
+
+youtube-dl --output=$x --format=18 "$1"
+
+avconv -i $x -acodec libmp3lame -ac 2 -ab 128k -vn -y "$2"
+
+rm $x

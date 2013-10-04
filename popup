@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export DISPLAY=:0
+
+espeak -v en "$1"
+zenity --info --text="$1"
+
+

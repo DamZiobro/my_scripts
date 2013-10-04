@@ -1,0 +1,26 @@
+#!/bin/bash
+
+ls $1 > list.txt
+
+FILE=list.txt
+DIRECTORY=$1modified_files/
+
+if [ -d "$DIRECTORY" ];
+then 
+    rm -r "$DIRECTORY"
+fi
+
+mkdir "$DIRECTORY"
+
+x=0
+lns=`wc -l $FILE`
+y=`expr "$lns" : '\([0-9]*\)'`
+while [ "$x" -lt "$y" ]
+do
+ let x=x+1
+ echo sed s/\"$2\"/\"$3\"/g "$1"`head -n $x $FILE | tail -n 1`" > $DIRECTORY"`head -n $x $FILE | tail -n 1` >> skrypcik
+done
+chmod +x skrypcik
+./skrypcik
+rm list.txt
+rm skrypcik

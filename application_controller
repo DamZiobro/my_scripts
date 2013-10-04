@@ -1,0 +1,27 @@
+#!/bin/bash
+
+MAILSTOP=0                         # switcher for mail sending
+CHECKINGPERIOD=2                  # in sec
+MYEMAIL="memento1987@interia.pl"           # where to send info
+
+while [ 1=1 ];
+do
+
+    if [ ! "$(pidof asterisk)" ]
+    then
+        if [ "$MAILSTOP" = "0" ]; then
+        echo "WARNING! Astarisk crashed!" | mail -s "Astarisk crash." "$MYEMAIL"
+        echo "WARNING! Asterisk crashed!"
+                MAILSTOP=1
+        fi
+        /usr/sbin/asterisk -vvvvvv
+    else
+	if [ "$MAILSTOP" = "1" ]; then
+        echo "Astarisk was successfully restarted." | mail -s "Astarisk restarted." "$MYEMAIL"
+        echo "Asterisk was succesfully restarted."
+		MAILSTOP=0
+        fi
+    fi                                                                                                            
+    sleep $CHECKINGPERIOD
+                                                                    
+done

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+export DISPLAY=:0
+
+VOCABULARY_FILE="$HOME/scripts/usefulScripts/vocabularyLearner/vocabulary.txt"
+NUMBER_OF_VOCABULARY_IN_FILE=`cat $VOCABULARY_FILE | wc -l`
+NUM=$(($RANDOM % $NUMBER_OF_VOCABULARY_IN_FILE))
+NUM=`expr $NUM + 1`
+CHOOSEN_VOCABULARY=`cat $VOCABULARY_FILE | head -n $NUM | tail -n1`
+
+
+#music123 /usr/share/sounds/ubuntu/stereo/service-login.ogg
+
+#splitting text
+IFS=">"
+set $CHOOSEN_VOCABULARY
+
+#visual notification
+notify-send -t 8000 -i system-users "$1 - $2" "Vocabulary notifier"
+
+#voice notification
+espeak -v en $1
+espeak -v pl $2
+

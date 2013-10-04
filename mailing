@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SUBJECT=$2
+TO=$1
+FROM="Damian Ziobro"
+MESSAGE=$3
+
+echo -e "|- Sending Mail: "
+echo -e " |- To: $TO"
+echo -e " |- From: $FROM"
+echo -e " |- Subject: $SUBJECT"
+echo -e " |- Message: $MESSAGE"
+
+echo -e "Sending..."
+	echo -e "To: $TO\nFrom: $FROM\nSubject: $SUBJECT\n\n\n$MESSAGE" | ssmtp $TO
+echo -e "Mail sent successfully!"
+exit 0

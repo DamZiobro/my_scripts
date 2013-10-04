@@ -1,0 +1,25 @@
+#!/usr/bin/python 
+
+import os 
+import sys 
+
+if(len(sys.argv) != 3 and len(sys.argv) != 4):
+    print "Error: bad arguments"
+    print "Usage: " + sys.argv[0] + " phraseForSearch environmentVariableWithPathsToSearch [additionalGrepOptions]"
+    sys.exit()
+
+
+environment = os.getenv(sys.argv[2])
+grepPhrase = sys.argv[1]
+directories = environment.split(":");
+grepCommandPrefix = "grep -rHIn --color=always --exclude-dir=\".svn\" "
+if(len(sys.argv) == 4):
+    grepCommandPrefix = grepCommandPrefix + sys.argv[3];
+
+#print "Grep command prefix: " + grepCommandPrefix
+
+for directory in directories:
+    #print "Grep dir: " + directory
+    grepCommand = grepCommandPrefix + " " + grepPhrase + " " + directory
+    os.system(grepCommand)
+
