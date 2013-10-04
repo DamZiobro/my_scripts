@@ -8,11 +8,11 @@ ang\_pol
 Script which connects to internet dictionary and translate word from English to
 Polish
 
-Usage: 
-   ang\_pol <englishWord>
+Usage: </br>
+   ang\_pol <englishWord> </br>
 
-Example: 
-  ang\_pol <go>
+Example: </br>
+  ang\_pol <go> </br>
   
   Output:
     >> isc; pojsc; chodzic
