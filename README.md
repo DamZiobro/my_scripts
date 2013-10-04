@@ -8,22 +8,41 @@ ang\_pol
 Script which connects to internet dictionary and translate word from English to
 Polish
 
-Usage: </br>
-   ang\_pol <englishWord> </br>
+<b>Usage:</b>
+   ```ang_pol <englishWord>```
+* <i>englishWord</i> - word in English to translate
 
-Example: </br>
-  ang\_pol <go> </br>
+<b>Example:</b>
+   ```ang_pol go ```
   
-  Output:
-    >> isc; pojsc; chodzic
-    >> (o srodkach lokomocji) jechac
-    >> (o nagrodzie) byc przyznanym
-    >> chodzic; poruszac sie; dzialac (np. o urzadzeniu)
-    >> odchodzic; mijac; ustepowac (np. o dolegliwosci)
-    >> sadzic (kat.: potoczny)
-    >> poloznictwo i ginekologia (kat.: medycyna)
+<b>Output of example:</b> <br>
+    >> isc; pojsc; chodzic <br>
+    >> (o srodkach lokomocji) jechac <br>
+    >> (o nagrodzie) byc przyznanym <br>
+    >> chodzic; poruszac sie; dzialac (np. o urzadzeniu) <br>
+    >> odchodzic; mijac; ustepowac (np. o dolegliwosci) <br>
+    >> sadzic (kat.: potoczny) <br>
+    >> poloznictwo i ginekologia (kat.: medycyna) <br>
+
+appendText
+-------------
+<b>Description</b>
+Script gets selected number of lines from one file and append those lines to other file.
+
+<b>Usage: </b>
+
+<b>Example: </b>
+
+<b>Output of example: </b>
 
 
+appendText
+-------------
+<b>Description</b>
+TODO
 
+<b>Usage: </b>
 
+<b>Example: </b>
 
+<b>Output of example: </b>
