@@ -30,56 +30,71 @@ appendText
 Script gets selected number of lines from one file and append those lines to other file.
 
 <b>Usage: </b>
-
+  ```appendText <inputFile> <outputFile> <numberOfLines>```
+* <i>inputFile</i> - files where lines should be get from
+* <i>outputFile</i> - files where lines should be appended to
+* <i>outputFile</i> - number of lines from inputFile which should be appended
+  to outputFile
 <b>Example: </b>
-
-<b>Output of example: </b>
-
+  ```appendText input.txt output.txt 2```
+* This will copy first 2 lines from input file and will append them to output.txt
 
 application\_controller
 -------------
 <b>Description</b>
-TODO
+Script which can assure that some application is still working. If application
+crashes, this script restart it.
+
+<b>Configuration: </b>
+There are few configuration variables withing application_controller file which
+should be set up:
+* <i>CHECKINGPERIOD</i> - interval (in seconds) where controller check whether
+  application is working 
+* <i>MYEMAIL</i> - email where notification about application crash and
+  restarting should be send (you have to have configured mail app to receive
+  mail notifications)
 
 <b>Usage: </b>
+  ```application_controller <APPLICATION_NAME>```
+* <i>APPLICATION_NAME</i> - name of application which should be checked by
+  controller. 
 
 <b>Example: </b>
+  ```application_controller asterisk```
 
-<b>Output of example: </b>
-
-
-apply\_diff\_changes
--------------
-<b>Description</b>
-TODO
-
-<b>Usage: </b>
-
-<b>Example: </b>
-
-<b>Output of example: </b>
+If we select asterisk APPLICATION_NAME then our script will
+check if asterisk is still working. If asterisk crashes, this controller
+restarts asterisk.
 
 bkp
 -------------
 <b>Description</b>
-TODO
+Doing backup of selected file copying it and appending .bkp to the name. It
+simplifying working with copies of file when we would like to override it temporary.
 
 <b>Usage: </b>
-
+```bkp <fileName>```
+* <i>fileName</i> - name of file which should be backed up
 <b>Example: </b>
-
-<b>Output of example: </b>
+```bkp input.txt```
+This will copy input.txt file to input.txt.bkp, so we can test something with
+input.txt file having it backed up.
 
 change\_dependencies\_in\_debs
 -------------
 <b>Description</b>
-TODO
+Appliation allows change dependencies and version of dependencies in .deb file
 
 <b>Usage: </b>
+```change_dependencies_in_debs <debFile.deb>```
+* <i>debFile.deb</i> - deb file where we would like to change dependencies
 
 <b>Example: </b>
-
-<b>Output of example: </b>
+```change_dependencies_in_debs skype.deb```
+After invoking above command application will extract skype.deb and will open
+control file (file where dependencies are saved) in vim editor. You can change
+those dependencies and save control file. After that, script will create
+skype.deb.modified.deb containing modified dependencies.
 
 change\_text\_in\_files
 -------------
