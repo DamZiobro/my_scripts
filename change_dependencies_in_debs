@@ -1,5 +1,5 @@
 #!/bin/bash
-EDITOR=gedit
+EDITOR=vim
 
 if [[ -z "$1" ]]; then
   echo "Syntax: $0 debfile"
