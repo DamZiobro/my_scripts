@@ -1,0 +1,28 @@
+#!/bin/bash 
+INTERFACE=$1
+PORT=$2
+PERCENT=$3
+DELETE=$4
+
+if [ "x$DELETE" != "x"  ]; then
+  echo -e "Deleting packet loss emulation rules"
+  sudo tc qdisc del dev $INTERFACE root || exit -1
+  echo -e "Packet loss rules for interface $INTERFACE deleted successfully...";
+else 
+  echo -e "Generate root of network emulation rules for interface $INTERFACE"
+  sudo tc qdisc add dev $INTERFACE handle 1: root htb || exit -1
+
+  echo -e "Generate default class which will be applied if not filter will be found";
+  sudo tc class add dev $INTERFACE parent 1: classid 1:1 htb rate 1000Mbps || exit -1
+
+  echo -e "Generate class for applying packet lost";
+  sudo tc class add dev $INTERFACE parent 1:1 classid 1:11 htb rate 1000Mbps || exit -1
+
+  echo -e "Apply level of packets lost to $PERCENT"
+  sudo tc qdisc add dev $INTERFACE parent 1:11 handle 10: netem loss $PERCENT || exit -1
+
+  echo -e "Apply filter of packet lost rules for specific port: $PORT"
+  sudo tc filter add dev $INTERFACE protocol ip prio 1 u32 match ip dport $PORT 0xffff flowid 1:11 || exit -1
+
+  echo -e "===> Packet loss level $PERCENT for interface $INTERFACE on port $PORT applied successfully...";
+fi
