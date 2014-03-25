@@ -72,6 +72,7 @@ bkp
 Doing backup of selected file copying it and appending .bkp to the name. It
 simplifying working with copies of file when we would like to override it temporary.
 
+
 <b>Usage: </b>
 ```bkp <fileName>```
 * <i>fileName</i> - name of file which should be backed up
@@ -96,49 +97,62 @@ control file (file where dependencies are saved) in vim editor. You can change
 those dependencies and save control file. After that, script will create
 skype.deb.modified.deb containing modified dependencies.
 
-change\_text\_in\_files
--------------
-<b>Description</b>
-TODO
-
-<b>Usage: </b>
-
-<b>Example: </b>
-
-<b>Output of example: </b>
-
 change\_text\_recursively
 -------------
 <b>Description</b>
-TODO
+Changes selected text to another selected text in all files in selected
+directory recursively.
 
 <b>Usage: </b>
+```change_text_recursively <dir> <replaceeText> <replacerText>```
+* <i>dir</i> - directory which will be search (recursively) for files to exchange replaceeText text 
+* <i>replaceeText</i> - old text which should be replaced 
+* <i>replacerText</i> - new text which should be put instred of replaceeText
 
 <b>Example: </b>
-
-<b>Output of example: </b>
+```change_text_recursively ./myDir before after```
+Execution of this example will search word <i>before</i> in all files being within myDir
+and replace each occurance of that word with <i>after</i> text.
 
 changeExtension
 -------------
 <b>Description</b>
-TODO
+Changes extension of selected files in current directory.
 
 <b>Usage: </b>
+```changeExtension <oldExtension> <newExtension>```
+* <i>oldExtension</i> - old extension of files which should be replaced
+* <i>newExtension</i> - new extension which should be assigned to files having
+  oldExtension
 
 <b>Example: </b>
-
-<b>Output of example: </b>
+```changeExtension JPG jpg```
+Invoking of this example will change all files from current directory having extension 
+'JPG' to files to files having extension 'jpg'
 
 connectSSHFSRemoteResource
 -------------
 <b>Description</b>
-TODO
+This script allows connect remote resources (ex. hard drive or directory)
+through SSHFS protocol.
+
+<b>Configuration: </b>
+before we will use this script we need to configure them. There are 5 options
+to configure at the beginning of script code:
+* <i> SERVER_USER </i> - username of remote computer which we would like to use to 
+  connect remote resources through SSH
+* <i> SERVER_IP </i> - IP address of remote computer which we would like to
+  connect through SSH
+* <i> SERVER_PATH </i> - path of resources on remote maching which we would
+  like to connect through SSH
+* <i> MOUNT_POINT </i> - local point where remote resources should be connect
+  to
+* <i> OPTIONS </i> - additional options of SSH connection
 
 <b>Usage: </b>
-
-<b>Example: </b>
-
-<b>Output of example: </b>
+```connectSSHFSRemoteResource```
+This usage will connect remote resources according to SERVER_USER, SERVER_IP,
+SERVER_PATH configuration to selected MOUNT_POINT on local computer.
 
 convertDotToPNG
 -------------
