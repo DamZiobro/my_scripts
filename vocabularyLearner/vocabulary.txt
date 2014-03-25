@@ -4,7 +4,6 @@ fence > ogrodzenie
 taxi stand > postój taksówek
 stuff > duszno
 miss the bus > spóźnić się na autobus
-regards > pozdrownienia
 haircut > fryzura
 platform > peron
 withdraw > wyciągnąć
@@ -34,7 +33,7 @@ savings > oszczędności
 tough > ciężki, trudny
 affect > wpływać
 calm one's nerves > uspokoić się
-deal > radzić sobie
+deal with > radzić sobie
 suffer > cierpieć
 blame > winić
 rough > wzburzony, niespokojny
@@ -47,7 +46,7 @@ walk away > odejść
 apprecite > doceniać
 survey > sonda, badanie
 modest > skromny
-self-confidence - pewność siebie
+self-confidence > pewność siebie
 exhausting > wyczerpujący
 strict > surowy
 keep off > trzymać się z daleka
@@ -56,10 +55,8 @@ efficient > skuteczny
 insult > obrazić kogoś
 violance > przemoc
 uninviting > zniechęcający
-refuse > odmówić
+refuse > odmówić, odrzucić
 involved > zaangażowany
-popular belif > powszechne przekonanie
-confidence > pewność
 enriching > wzbogacający
 objection > sprzeciw
 self-reliant - samodzielny
@@ -81,12 +78,12 @@ as can be seen > jak można zauważyć
 distortion > zniekształcenie
 impairment > uszkodzenie
 accurate = relevant > celny, trafny, odpowiedni
-pravailing = common > powszechny
+pravailing > powszechny
 advent > nadejście, nastanie
-performance > przedstawienie, wykonanie
+performance > przedstawienie, wykonanie, wydajność
 arise > wyniknąć
 bootleneck > wąskie gardło
-concede > przyznać
+concede > przyznać, poddawać się, dawać za wygraną
 what dates are you planning of taking off > w jakich dniach planujesz wziac wolne
 strange > dziwny
 retirement > wycofanie, emerytura
@@ -105,7 +102,7 @@ get a chance to ... > otrzymać szansę na ..
 sustain = (maintenance) > podtrzymywać
 eligible for > kwalifikujący się do...
 Somebody is used to doing > Ktoś jest przyzwyczajony do (robienia czegoś)
-arbitrary = (random) > dowolny, przypadkowy, losowy
+arbitrary > dowolny, przypadkowy, losowy
 occlusion > zatkanie, zasłonięcie
 take into account > brać pod uwagę
 have a lot in common with > mieć wiele wspólnego z...
@@ -115,7 +112,7 @@ I haven't done it yet > Jeszcze nie zrobiłem tego
 It sounds great to me > Brzmi świetnie
 put on weight > przybrać na wadze
 in about two hours > za około dwie godziny
-I am sedentary > Prowadzę siedziący tryb życia
+I am sedentary > Prowadzę siedzący tryb życia
 5000 years from now > za 5000 lat
 is not longer necessery > nie jest już potrzebne
 don't let yourself go > nie odpuszczaj sobie
@@ -125,7 +122,7 @@ give an advice > dawać rady
 is nothing but > jest niczym innym niż
 refurbished > odnowiony
 be in a hurry > spieszyć się
-as well > tak samo
+as well > tak samo, także
 I havn't been able to do it yet > Nie byłem w stanie jeszcze tego zrobić
 I couldn't undestand you > Nie byłem w stanie cię zrozumieć
 I could have done it > Mogłem to zrobić
@@ -134,7 +131,6 @@ blast > wybuch
 tighten > napinać się
 reduce the deficit > odrobić straty
 apparent > widoczny, oczywisty
-it is disrespectful > to jest bez respectu
 concede = agree > przyznawać, ustąpić
 cohesion > spójność, jedność
 belief > przekonanie, wiara
@@ -149,7 +145,7 @@ combination lock > zamek do roweru na cyfry
 bunch of keys > pęk kluczy
 spare key > klucz zapasowy
 I managed to avoid > udało mi się uniknąć
-ochronić coś > shelter something
+shelter something > ochronić coś
 interogate,investigate > przesłuchiwać
 doormat > wycieraczka
 solely > jedynie, wyłącznie
@@ -180,10 +176,9 @@ flawlessly > bezbłędnie
 I want you to do something > Chcę żebyś coś zrobił
 I knew it was going to be like this > Tak myślałem, że będzie to wyglądać w ten sposób
 climb > wspinać się, awansować
-disturb > niepokoić, zakłócać
+disturb > niepokoić, zakłócać, przeszkadzać
 overhaul = renovate > odnowić
 outstanding > zaległy
-concede > poddawać się, dawać za wygraną
 argue > kłócić się, dyskutować
 take over > zastąpić, zająć czyjeś miejsce
 coincide > zbieać się, pokrywać, zachodzić na siebie
@@ -210,7 +205,7 @@ I cannot wait to... > nie mogę się doczekać, żeby
 I feel blue > czuję się smutny
 to be mean > być podłym, skąpym
 of course, it is not a trouble at all > oczywiście, to żaden kłopot
-cooperative = helpful > pomocny
+cooperative > pomocny
 studiously > starannie
 It should not have been occur > To nie powinno było się wydarzyć
 indispensable > niezbędny
@@ -250,14 +245,14 @@ outweigh > przeważać, przewyższać
 regret to say, but... > przykro mi to mówić, ale...
 spurn > odrzucać, odmawiać
 enforce > narzucać, wymuszać
-hence > stąd, od tej chwili
+hence > dlatego też, w związku z tym 
 suppress > zakazać, tłumić, powstrzymywać
-intricacy=complexity > zawiłość, skomplikowanie
+intricacy > zawiłość, skomplikowanie
 emphasis on code quality > nacisk na jakość kodu
 fallen from the sky > nie wiadomo skąd (w przenośni)
 to be up-to-date > być na bieżąco
 equate > wyrównać
-fingers crossed > trzymam kciuki
+fingers crossed > trzymać kciuki
 Not sentient > nieodczuwalnie
 comprise=consist > składać się z
 robust > odporny
@@ -274,3 +269,65 @@ literally > dosłownie
 needless to say > nie trzeba dodawać, że
 disquise > zamaskować
 allude > odnosić się, robić aluzje
+You might have thought that > Mógłbyś sobie pomyśleć, że
+get back > odzyskać
+plausible > przekonujący, wiarygodny
+genuine > autentyczny, prawdziwy
+disastrous > katastrofalny
+vigilent > czujny
+encourage > namawiać, polecać
+temptation > pokusa
+out-and-out > w żywe oczy
+longevity > długość życia, trwałość
+arguably > niewątpliwie
+buck > przeciwdziałać
+callous > bezduszny, nieczuły
+levy > opłata, pobierać, ściągać
+challenging > wymagający
+I am on my way > już idę
+exaggerate > przesadzać
+upset > zmartwiony, poruszony
+deliberately > celowo, umyślnie
+interestingly > co ciekawe...
+It seems to me that > wydaje mi się, że
+contest > konkurs, rywalizacja
+it ticks all the boxes > to spełnia wszystkie warunki
+as opposed to > w przeciwieństwie do
+rejoice > cieszyć się
+at last > wreszcie, nareszcie, w końcu
+tedious > nudny
+cumbersome > nieporęczny, nieefektywny
+naysayer > narzekacz, osoba będąca przeciwko
+embark > rozpocząć, przedsięwziąć
+humidity > wilgotność
+boredom > nuda, znudzenie
+nutshell > zwięźle, precyzyjnie, któtko mowiąc
+cumbersome > nieefektywny, nieporęczny
+even though > pomimo, że
+outfit > wyposażenie, zestaw narzędzi
+turning point > punkt zwrotny
+outnumber > przewyższać
+reportedly > podobno
+adhere > stosować się, przestrzegać
+strive > starać się, usiłować, dążyć
+plight > kłopoty, tarapaty
+devoted > oddany, poświęcony
+misconduct > wykroczenie
+overwhelming > przytłaczający
+headway > postęp
+push in > wepchać się
+collapse > zawalać się, rozpadać
+alter > zmieniać, modyfikować
+though > chociaż, jednakże
+vigilant > czujny
+revive > ożywić, odnowić
+discern > rozróżniać
+anticipation > oczekiwanie
+dilute > rozproszyć
+by a bigger margin > w wyższych rozmiarach
+that is causing queues > to powoduje kolejki
+conversely > i na odwrót
+volatile > niestały, niepewny
+anticipate > oczekiwać
+comply > przestrzegać
+clutter > nieporządek, bałagan
