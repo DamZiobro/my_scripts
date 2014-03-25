@@ -4,4 +4,4 @@
 # $2 - text which should be removed
 # $3 - text which should be put against replaced text
 
-grep -rHl --exclude-dir="*.svn" --exclude-dir="*.git"$2 $1 | xargs sed -i "s/$2/$3/g"
+grep -rHl --exclude-dir="*.svn" --exclude-dir="*.git" $2 $1 | xargs sed -i "s/$2/$3/g"
