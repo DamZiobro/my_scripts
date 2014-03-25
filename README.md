@@ -190,13 +190,17 @@ TODO
 createSVNRepository
 -------------
 <b>Description</b>
-TODO
+Create SVN repository for selected PROJECT_NAME on local server's directory 
+/home/svn/PROJECT_NAME
 
 <b>Usage: </b>
+```createSVNRepository PROJECT_NAME```
+* <i>PROJECT_NAME</i> - name of project and directory of SVN repository 
 
 <b>Example: </b>
-
-<b>Output of example: </b>
+```createSVNRepository usefulScripts```
+This creates SVN repository in directory /home/svn/usefulScripts. 
+Repository is ready to check in and check out without authentication.
 
 disable\_enable\_touchpad
 -------------
