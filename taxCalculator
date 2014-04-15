@@ -1,0 +1,146 @@
+#!/usr/bin/python 
+
+import os 
+import sys 
+
+PERSONAL_ALLOWANCE=10000
+FIRST_TAX_THRESHOLD=31866 
+SECOND_TAX_THRESHOLD=150000
+
+NIC_ALLOWANCE=7956
+DIVIDEND_ALLOWANCE=31865
+
+EMPLOYER_NIC_CLASS_1_CONTRIBUTION_PERCENTAGE=13.8
+BASIC_EMPLOYEE_NIC_CLASS_1_CONTRIBUTION_PERCENTAGE=12 
+ABOVE_1ST_THRESHOLD_EMPLOYEE_NIC_CLASS_1_CONTRIBUTION_PERCENTAGE=2 
+
+BASIC_TAX_RATE=20 
+ABOVE_1ST_THRESHOLD_TAX_RATE=40
+ABOVE_2ST_THRESHOLD_TAX_RATE=45
+
+OTHER_COMPANY_EXPENSES_RATIO=0.1
+
+def printStatement(incomeToPrint, titleOfStatement, isPrintDailyAndHourly = False, secondIncome = None, secondIncomeTitle = None):
+    if(incomeToPrint < 0):
+        incomeToPrint = 0;
+    if(secondIncome != None and secondIncome < 0):
+        secondIncome = 0;
+    incomeToPrintMonthly = float(incomeToPrint)/12;
+    incomeToPrintWeekly  = float(incomeToPrint)/52;
+    weeklyPrintLine  = ("      - weekly:  %.2f " % round(incomeToPrintWeekly,2))
+    monthlyPrintLine = ("      - monthly: %.2f " % round(incomeToPrintMonthly,2))
+    yearlyPrintLine  = ("      - yearly:  %.2f " % round(incomeToPrint,2))
+
+    if(secondIncome != None):
+        secondIncomeMonthly = float(secondIncome)/12 
+        secondIncomeWeekly  = float(secondIncome)/52 
+        weeklyPrintLine += "(%.2f)" % round(secondIncomeWeekly, 2)
+        monthlyPrintLine += "(%.2f)" % round(secondIncomeMonthly, 2)
+        yearlyPrintLine += "(%.2f)" % round(secondIncome, 2)
+
+    if(secondIncomeTitle != None):
+        print "   -> " + titleOfStatement + " (incl. "+ str(secondIncomeTitle) +"): "
+    else:
+        print "   -> " + titleOfStatement + ": "
+
+    if(isPrintDailyAndHourly):
+        incomeToPrintDaily  = float(incomeToPrintWeekly)/5;
+        incomeToPrintHourly  = float(incomeToPrintWeekly)/40; 
+        hourlyPrintLine = ("      - hourly:  %.2f " % round(incomeToPrintHourly,2))
+        dailyPrintLine =  ("      - daily:   %.2f " % round(incomeToPrintDaily,2))
+        if(secondIncome != None):
+            secondIncomeDaily = float(secondIncomeWeekly)/5
+            secondIncomeHourly = float(secondIncomeWeekly)/40 
+            dailyPrintLine += "(%.2f)" % round(secondIncomeDaily,2)
+            hourlyPrintLine += "(%.2f)" % round(secondIncomeHourly,2)
+        print hourlyPrintLine 
+        print dailyPrintLine 
+    print weeklyPrintLine 
+    print monthlyPrintLine 
+    print yearlyPrintLine
+    print ("   ===============================================")
+
+
+if (len(sys.argv) != 2):
+    print "  ERROR => Usage: " + sys.argv[0] + " [salary in format [XXXXX] or rate per hour[XX]]"
+    exit(-1)
+
+if(len(sys.argv[1]) > 3):
+    grossIncome = int(sys.argv[1])
+    print "Calculation based on salary income: " + str(grossIncome)
+    printStatement(grossIncome, "Gross income", True)
+
+    # tax calculation 
+    taxableIncome = grossIncome - PERSONAL_ALLOWANCE 
+    taxToPay = 0;
+    aboveFirstThresholdTaxToPay = 0;
+    if(taxableIncome > SECOND_TAX_THRESHOLD):
+        aboveSecondTaxThresholdIncome = taxableIncome - SECOND_TAX_THRESHOLD
+        taxToPay += aboveSecondTaxThresholdIncome * float(ABOVE_2ST_THRESHOLD_TAX_RATE)/100;
+        taxableIncome -= aboveSecondTaxThresholdIncome
+    if(taxableIncome > FIRST_TAX_THRESHOLD):
+        aboveFirstTaxThresholdIncome = taxableIncome - FIRST_TAX_THRESHOLD
+        taxToPay += aboveFirstTaxThresholdIncome * float(ABOVE_1ST_THRESHOLD_TAX_RATE)/100;
+        aboveFirstThresholdTaxToPay = taxToPay
+        taxableIncome -= aboveFirstTaxThresholdIncome
+    if(taxableIncome > 0):
+        taxToPay += taxableIncome * float(BASIC_TAX_RATE)/100;
+    printStatement(taxToPay, "Tax to pay", False, aboveFirstThresholdTaxToPay, " 40% rate tax")
+
+    # employee NIC contribution 
+    nicPayableIncome = grossIncome - NIC_ALLOWANCE 
+    employeeNIC = 0
+    employeeNICAbove1stThreashold = 0
+    if(nicPayableIncome > FIRST_TAX_THRESHOLD):
+        aboveFirstTaxThresholdNICPayable = nicPayableIncome - FIRST_TAX_THRESHOLD
+        employeeNIC += aboveFirstTaxThresholdNICPayable * float(ABOVE_1ST_THRESHOLD_EMPLOYEE_NIC_CLASS_1_CONTRIBUTION_PERCENTAGE)/100; 
+        employeeNICAbove1stThreashold = employeeNIC
+        nicPayableIncome -= aboveFirstTaxThresholdNICPayable
+    if(nicPayableIncome > 0):
+        employeeNIC += nicPayableIncome * float(BASIC_EMPLOYEE_NIC_CLASS_1_CONTRIBUTION_PERCENTAGE)/100 
+    printStatement(employeeNIC, "Employee NIC to pay", False, employeeNICAbove1stThreashold, " above 40% tax rate")
+
+    # employer NIC contribution 
+    employerNIC = (grossIncome - NIC_ALLOWANCE) * float(EMPLOYER_NIC_CLASS_1_CONTRIBUTION_PERCENTAGE)/100 
+    printStatement(employerNIC, "Employer NIC to pay")
+
+    #total work cost
+    totalWorkCost = grossIncome + employerNIC 
+    printStatement(totalWorkCost, "Total Employer's work cost")
+
+    #Employee's net income
+    employeeNetIncome = grossIncome - employeeNIC - taxToPay 
+    printStatement(employeeNetIncome, "Employee's net income", True)
+
+else: 
+    hourlyRate = int(sys.argv[1])
+    print "Calculation based on hourly rate (Ltd and dividends): " + str(hourlyRate)
+
+    #grossIncome (assume that contractor works only 20 days a month, 8 hours/day)
+    grossIncome = hourlyRate*8*20*12
+    printStatement(grossIncome, "Gross income", True)
+
+    #other business expenses 
+    otherExpenses = grossIncome * OTHER_COMPANY_EXPENSES_RATIO
+
+    #tax calculation
+    taxableIncome = grossIncome - PERSONAL_ALLOWANCE - otherExpenses
+    taxToPay = taxableIncome * float(BASIC_TAX_RATE)/100
+    printStatement(taxToPay, "Tax to pay")
+    
+    #dividends
+    dividendLevel = taxableIncome-taxToPay
+    if dividendLevel > DIVIDEND_ALLOWANCE:
+        dividendLevel = DIVIDEND_ALLOWANCE
+    printStatement(dividendLevel, "Dividend Level")
+
+    #remaining company money 
+    remainingCompanyMoney = taxableIncome - taxToPay - dividendLevel
+    printStatement(remainingCompanyMoney, "Remaining company money")
+
+    #director's + company net income 
+    directorNetIncome = PERSONAL_ALLOWANCE + dividendLevel 
+    printStatement(directorNetIncome, "Director net income", True, remainingCompanyMoney, " + Company remaining") 
+
+
+grossIncome = sys.argv[1]
