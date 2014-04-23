@@ -1,2 +1,0 @@
-#!/bin/bash
-links -dump http://megaslownik.pl/slownik/angielsko_polski/$1 | grep "   >> "
