@@ -60,7 +60,7 @@ sudo apt-get install libgtk2.0-0 libgtk2.0-dev
 echo -e "\e[00;32mInstall OpenCV library \e[00m"
 wget http://garr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.8/opencv-2.4.8.zip || exit -1
 unzip opencv-2.4.8.zip || exit -1
-cd openCV-2.4.8
+cd opencv-2.4.8
 mkdir buildRelease || exit -1
 cd buildRelease
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_NEW_PYTHON_SUPPORT=ON -D BUILD_EXAMPLES=ON .. || exit -1
