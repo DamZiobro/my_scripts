@@ -7,33 +7,40 @@ from urllib import urlencode, urlopen
 from mechanize import Browser
 
 def make_tiny(url):
+    """Creates tiny URL from long url using http://tinyrul.com webservice"""
     request_url = ('http://tinyurl.com/api-create.php?' + urlencode({'url':url}))
     with contextlib.closing(urlopen(request_url)) as response:
         return response.read().decode('utf-8')
 
-if(len(sys.argv) != 2 and len(sys.argv) != 3 and len(sys.argv) != 4):
-    print "Usage" + sys.argv[0] + "URL [Category] [TitleText]"
+
+if(len(sys.argv) < 2 or len(sys.argv) > 5):
+    print "Usage " + sys.argv[0] + " URL [Category] [Fanpage,Fanpages] [TitleText]"
     exit(-1)
 
 # =================================================
 url = sys.argv[1]
 category = "General"
-fanpage = "XMementoIT"
-outputDirPath = "$HOME/gdrive"
+fanpages = ["XMementoIT"]
+outputDirPath = "/opt/gdrive"
 # =================================================
 
 titleText = ""
 
-if(len(sys.argv) == 3):
+if(len(sys.argv) >= 3):
     category = sys.argv[2]
-if(len(sys.argv) == 4):
-    titleText = sys.argv[3]
+if(len(sys.argv) >= 4):
+    fanpages = str(sys.argv[3]).split(",")
+if(len(sys.argv) >= 5):
+    titleText = sys.argv[4]
 else:
     br = Browser();
     br.open(url)
     titleText = br.title()
 
 tinyurl = make_tiny(url)
+
+print "tinyurl: " + str(tinyurl)
+print "titleText: " + str(titleText)
 
 prefixText = ""
 suffixText = ""
@@ -46,15 +53,21 @@ elif category == "CVLearning":
 elif category == "CppLearning":
     prefixText = "C++ Learning"
     suffixText = "#cpp"
-else:
+elif not (category == "General"):
     suffixText = "#" + category
 
-prefixText += " => " + titleText + " - " + tinyurl + " " + suffixText
-outputFile = outputDirPath + "/PostTo" + fanpage + "_" + category + ".txt"
+#connect gdrive if it is not connected 
+if not os.listdir(outputDirPath):
+    os.system("google-drive-ocamlfuse " + outputDirPath)
+    
 
-os.system("echo \"" + prefixText + "\" >> " + outputFile)
+prefixText += " => " + str(titleText) + " - " + str(tinyurl) + " " + suffixText
 
-print ("===> Added to file: " + outputFile)
-print ("===> Added text: \"" + prefixText) + "\""
+for fanpage in fanpages:
+    outputFile = outputDirPath + "/postFiles/PostTo" + fanpage + "_" + category + ".txt"
+    os.system("echo \"" + prefixText + "\" >> " + outputFile)
 
+    print ("===> Added to file: " + outputFile)
+    print ("===> Added text: \"" + prefixText) + "\""
+    print "==============================================="
 
