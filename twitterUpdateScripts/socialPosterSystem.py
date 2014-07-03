@@ -4,9 +4,11 @@ import sys
 
 
 def getPostAndUpdateFile(postsFile):
+    if (not os.path.exists(postsFile)):
+        return None
+    postText = None
     with open(postsFile, "r+") as f:
         lines = f.readlines()
-        postText = None
         if len(lines) == 0:
             postText = lines[0]
             lines.remove(postText)
@@ -15,12 +17,12 @@ def getPostAndUpdateFile(postsFile):
             f.writelines(lines)
             f.close()
             print "Posting text: " + postText
-        return postText
+    return postText
     
 if __name__ == "__main__":
     section = sys.argv[1]
     fanpage = sys.argv[2]
-    griveFolder = os.getenv("HOME")+"/gdrive/"
+    griveFolder = "/opt/gdrive/"
     postsFile = griveFolder + "postFiles/PostTo"+fanpage+"_"+section+".txt"
     
     #update post files
@@ -31,7 +33,7 @@ if __name__ == "__main__":
     postText = getPostAndUpdateFile(postsFile)
     if postText == None:
         print ("Nothing to share...")
-        return;
+        sys.exit();
 
     print postText
     
