@@ -6,7 +6,7 @@ if target missing, use DEFAULT_TARGET_LANG
 if source missing, use auto'
 
 # adjust to taste
-DEFAULT_TARGET_LANG=en
+DEFAULT_TARGET_LANG=pl
 
 if [[ $1 = -h || $1 = --help ]]
 then
