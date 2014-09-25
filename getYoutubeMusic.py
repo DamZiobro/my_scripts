@@ -9,7 +9,7 @@
 Getting youtube videos to selected Mp3
 """
 
-import re
+import os, re
 import urllib, json
 import sys 
 
@@ -53,8 +53,9 @@ for song in songsLines:
     print splitWords
 
     youtubeUrl = getYoutubeUrl(splitWords)
+    print youtubeUrl
     if not youtubeUrl == None:
-        youtubeToMp3 youtubeUrl
+        os.system("youtubeToMp3 " + youtubeUrl);
     else:
         areAnyNotDownloaded = 1;
         notDownloadedFile = open("notDownloaded.txt", "a");

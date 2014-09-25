@@ -20,7 +20,7 @@ if(len(sys.argv) < 2 or len(sys.argv) > 5):
 # =================================================
 url = sys.argv[1]
 category = "General"
-fanpages = ["XMementoIT"]
+fanpages = ["DamianZiobro"]
 outputDirPath = "/opt/gdrive"
 # =================================================
 
@@ -56,9 +56,8 @@ elif category == "CppLearning":
 elif not (category == "General"):
     suffixText = "#" + category
 
-#connect gdrive if it is not connected 
-if not os.listdir(outputDirPath):
-    os.system("google-drive-ocamlfuse " + outputDirPath)
+#update google drive
+os.system("cd " + outputDirPath + "; grive");
     
 
 prefixText += " => " + str(titleText) + " - " + str(tinyurl) + " " + suffixText
