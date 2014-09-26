@@ -10,7 +10,9 @@ if(len(sys.argv) != 3 and len(sys.argv) != 4):
 
 
 environment = os.getenv(sys.argv[2])
+print "environment: " + environment
 grepPhrase = sys.argv[1]
+print "grepPhrase: " + grepPhrase
 directories = environment.split(":");
 grepCommandPrefix = "grep -rHIn --color=always --exclude-dir=\".svn\" "
 if(len(sys.argv) == 4):
