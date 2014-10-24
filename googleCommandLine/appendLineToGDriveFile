@@ -1,0 +1,48 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim:fenc=utf-8
+#
+# Copyright © 2014 Damian Ziobro <damian@xmementoit.com>
+#
+# Distributed under terms of the MIT license.
+
+"""
+Adding line to GDrive file 
+
+(GDrive have to be synchronized with 
+the local disc directory using grive tool)
+"""
+
+import sys 
+import os 
+import commands
+
+if __name__ == "__main__":    
+    if(len(sys.argv) != 3):
+        print ("ERROR: wrong arguments")
+        print ("Usage: " + sys.argv[0] + " fileName lineToAdd ");
+        exit(-1)
+    
+    gdriveDir = os.getenv("GDRIVE_DIR");
+    if(gdriveDir == None):
+        print ("ERROR: GDrive cannot be found. Please synchronize your Google Drive with local directory and export it as GDRIVE_DIR envvar.");
+        exit(-2)
+    else:
+        print ("GDRIVE_DIR: " + gdriveDir)
+
+    fileName  = sys.argv[1]
+    lineToAdd = sys.argv[2]
+    
+    print ("File to add:  " + gdriveDir + "/" + fileName)
+    print ("Line to add:  " + lineToAdd)
+
+    command = "echo " + lineToAdd + " >> " + gdriveDir + "/" + fileName
+    status,output = commands.getstatusoutput(command)
+    if (status):
+        print ("ERROR: Cannot add line to gdrive file...");
+        print ("Status: " + str(status))
+        print ("Output: " + output)
+        exit(-3)
+
+    print ("Line " + lineToAdd + " added successfully to file " + gdriveDir + "/" + fileName);
+
