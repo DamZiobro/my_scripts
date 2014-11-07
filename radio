@@ -14,9 +14,8 @@ then
  echo "Aby włączyć dane radio wpisz: radio Nazwa_radia_z_listy_wyzej. Np. radio RMF_FM ";
 else
   case $RADIO in
-    "RMF_FM") adres="http://87.98.223.167:8002" ;;
+    "RMF_FM") adres="http://www.miastomuzyki.pl/n/rmffm.pls" ;;
     "Radio_Zet") adres="http://www.radiozet.pl/externals/radiozet-streams/radiozet.pls" ;;
-    "Radio_Lodz") adres="http://ra.man.lodz.pl:8000/radiolodz.ogg" ;;
     "Radio_Eska") adres="http://olsztyn.radio.pionier.net.pl:8000/z/eska-lodz.ogg" ;;
     "Radiosfera") adres="http://serv.radiosfera.pl:7098" ;;
     "Zlote_Przeboje") adres="http://szczecin.radio.pionier.net.pl:8000/pl/zloteprzeboje.ogg" ;;
@@ -34,7 +33,6 @@ else
     "Polskie_Radio_Dwojka") adres="http://www.polskieradio.pl/st/program2.asx" ;;
     "Polskie_Radio_Jedynka") adres="http://www.polskieradio.pl/st/program1M.asx" ;;
     "BBC") adres="http://www.bbc.co.uk/worldservice/meta/tx/nb/live/eneuk.ram" ;;
-    "iGol") adres="http://www.igol.fm/igol.pls" ;;
     "Zakoncz_odtwarzanie") PLAY='no'; killall -9 $PLAYER; killall -9 vlc; notify-send -i gtk-media-stop -t 2500 -u low "RADIO" "Stop playing radio" ;;
     *) PLAY='no'; echo "Błąd! Nie ma takiego radia" ;;
   esac
@@ -44,7 +42,7 @@ else
    notify-send -i gtk-media-play-ltr -u low "RADIO" "Playing radio: $RADIO" 
    killall -9 $PLAYER
    killall -9 vlc
-   $PLAYER $adres
+   $PLAYER $adres &
   fi
 fi
 
