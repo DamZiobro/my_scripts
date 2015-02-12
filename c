@@ -17,3 +17,6 @@ fi
 #echo $LINE_NUMBER 
 tmux copy-mode \; send-keys $LINE_NUMBER k $ h Space ^ Enter 
 
+COPIED_STRING=`tmux show-buffer -b 0`
+echo $COPIED_STRING
+
