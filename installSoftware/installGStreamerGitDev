@@ -40,4 +40,6 @@ installGStreamerComponent gstreamer
 installGStreamerComponent gst-plugins-base
 installGStreamerComponent gst-plugins-good 
 installGStreamerComponent gst-plugins-bad 
+installGStreamerComponent gst-plugins-ugly 
+installGStreamerComponent gst-rtsp-server 
 
