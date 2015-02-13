@@ -15,19 +15,20 @@ function installGStreamerComponent {
     cd ..
 }
 
-if [ $1 == "-h" ];
-then 
-    echo -e "Usage: installGStreamerGitDev [1]"
-    echo -e "           1       - optional parameter. If set, then previously installed GStreamer libraries will be removed before installation new version"
-    exit -1
-fi
 
 if [ $# == 1 ];
 then 
+    if [ $1 == "-h" ];
+    then 
+        echo -e "Usage: installGStreamerGitDev [1]"
+        echo -e "           1       - optional parameter. If set, then previously installed GStreamer libraries will be removed before installation new version"
+        exit -1
+    fi
+
     echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
-    sudo rm -r /usr/local/include/glib-2.0 /usr/local/include/gstreamer-1.0 /usr/local/include/xercesc /usr/local/include/gio-unix-2.0 
+    sudo rm -r /usr/local/include/gstreamer-1.0
     cd /usr/local/lib 
-    sudo rm -r libffi-3.2.1 glib-2.0 gstreamer-1.0 libgrabberConfiguration.so libxerces* libffi* libglib-2.0.* libgmodule-2.0.* libgthread-2.0.* libgobject-2.0.* libgio-2.0.* libgst* pkgconfig*
+    sudo rm -r gstreamer-1.0 libgst*
     cd -
 fi
 
