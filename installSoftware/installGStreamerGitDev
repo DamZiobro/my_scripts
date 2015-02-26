@@ -1,0 +1,43 @@
+#!/bin/bash 
+
+PREFIX=/usr/local 
+
+function installGStreamerComponent {
+    echo -e "============================================================"
+    echo -e "Installing $1"
+    echo -e "============================================================"
+
+    git clone git://anongit.freedesktop.org/gstreamer/$1 || exit -1
+    cd $1 || exit -1
+    ./autogen.sh --prefix=$PREFIX || exit -1
+    make -j`nproc` || exit -1
+    sudo make -j`nproc` install || exit -1
+    cd ..
+}
+
+
+if [ $# == 1 ];
+then 
+    if [ $1 == "-h" ];
+    then 
+        echo -e "Usage: installGStreamerGitDev [1]"
+        echo -e "           1       - optional parameter. If set, then previously installed GStreamer libraries will be removed before installation new version"
+        exit -1
+    fi
+
+    echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
+    sudo rm -r /usr/local/include/gstreamer-1.0
+    cd /usr/local/lib 
+    sudo rm -r gstreamer-1.0 libgst*
+    cd -
+fi
+
+GSTREAMER_DIR=gstreamerInstall
+mkdir $GSTREAMER_DIR
+cd $GSTREAMER_DIR
+
+installGStreamerComponent gstreamer
+installGStreamerComponent gst-plugins-base
+installGStreamerComponent gst-plugins-good 
+installGStreamerComponent gst-plugins-bad 
+

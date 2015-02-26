@@ -15,10 +15,10 @@ then
 else
   case $RADIO in
     "RMF_FM") adres="http://www.miastomuzyki.pl/n/rmffm.pls" ;;
-    "Radio_Zet") adres="http://www.radiozet.pl/externals/radiozet-streams/radiozet.pls" ;;
+    "Radio_Zet") adres="http://radiozetmp3-07.eurozet.pl:8400/;stream" ;;
     "Radio_Eska") adres="http://olsztyn.radio.pionier.net.pl:8000/z/eska-lodz.ogg" ;;
     "Radiosfera") adres="http://serv.radiosfera.pl:7098" ;;
-    "Zlote_Przeboje") adres="http://szczecin.radio.pionier.net.pl:8000/pl/zloteprzeboje.ogg" ;;
+    "Zlote_Przeboje") adres="http://www.radio.pionier.net.pl/stream.pls?radio=radio88" ;;
     "TOK_FM") adres="http://szczecin.radio.pionier.net.pl:8000/pl/radiotok.ogg" ;;
     "Radio_Rzeszow") adres="http://radio.rzeszow.pl/stereo.pls" ;;
     "Polskie_Niezapomniane_Przeboje") adres="http://www.polskastacja.pl/play/aac_pnp.pls" ;;
@@ -32,7 +32,12 @@ else
     "Polskie_Radio_Trojka") adres="http://www.polskieradio.pl/st/program3M.asx" ;;
     "Polskie_Radio_Dwojka") adres="http://www.polskieradio.pl/st/program2.asx" ;;
     "Polskie_Radio_Jedynka") adres="http://www.polskieradio.pl/st/program1M.asx" ;;
-    "BBC") adres="http://www.bbc.co.uk/worldservice/meta/tx/nb/live/eneuk.ram" ;;
+    "BBC1") adres="http://bbc.co.uk/radio/listen/live/r1.asx" ;;
+    "BBC2") adres="http://bbc.co.uk/radio/listen/live/r2.asx" ;;
+    "BBC3") adres="http://bbc.co.uk/radio/listen/live/r3.asx" ;;
+    "BBC4") adres="http://bbc.co.uk/radio/listen/live/r4.asx" ;;
+    "BBC5live") adres="http://bbc.co.uk/radio/listen/live/r5l.asx" ;;
+    "BBCLeeds") adres="http://bbc.co.uk/radio/listen/live/bbcleeds.asx" ;;
     "Zakoncz_odtwarzanie") PLAY='no'; killall -9 $PLAYER; killall -9 vlc; notify-send -i gtk-media-stop -t 2500 -u low "RADIO" "Stop playing radio" ;;
     *) PLAY='no'; echo "Błąd! Nie ma takiego radia" ;;
   esac

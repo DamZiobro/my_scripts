@@ -1,0 +1,5 @@
+#!/bin/bash 
+
+docker images 
+echo -e "\n\n"
+docker ps
