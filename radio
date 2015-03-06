@@ -32,12 +32,12 @@ else
     "Polskie_Radio_Trojka") adres="http://www.polskieradio.pl/st/program3M.asx" ;;
     "Polskie_Radio_Dwojka") adres="http://www.polskieradio.pl/st/program2.asx" ;;
     "Polskie_Radio_Jedynka") adres="http://www.polskieradio.pl/st/program1M.asx" ;;
-    "BBC1") adres="http://bbc.co.uk/radio/listen/live/r1.asx" ;;
-    "BBC2") adres="http://bbc.co.uk/radio/listen/live/r2.asx" ;;
-    "BBC3") adres="http://bbc.co.uk/radio/listen/live/r3.asx" ;;
-    "BBC4") adres="http://bbc.co.uk/radio/listen/live/r4.asx" ;;
-    "BBC5live") adres="http://bbc.co.uk/radio/listen/live/r5l.asx" ;;
-    "BBCLeeds") adres="http://bbc.co.uk/radio/listen/live/bbcleeds.asx" ;;
+    "BBC1") adres="http://www.listenlive.eu/bbcradio1.m3u" ;;
+    "BBC2") adres="http://www.listenlive.eu/bbcradio2.m3u" ;;
+    "BBC3") adres="http://www.listenlive.eu/bbcradio3.m3u" ;;
+    "BBC4") adres="http://www.listenlive.eu/bbcradio4.m3u" ;;
+    "BBC5live") adres="http://www.listenlive.eu/bbc5live.m3u" ;;
+    "BBCLeeds") adres="http://open.live.bbc.co.uk/mediaselector/5/select/version/2.0/mediaset/http-icy-mp3-a/vpid/bbc_radio_leeds/format/pls.pls" ;;
     "Zakoncz_odtwarzanie") PLAY='no'; killall -9 $PLAYER; killall -9 vlc; notify-send -i gtk-media-stop -t 2500 -u low "RADIO" "Stop playing radio" ;;
     *) PLAY='no'; echo "Błąd! Nie ma takiego radia" ;;
   esac
