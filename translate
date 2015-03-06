@@ -17,7 +17,7 @@ fi
 if [[ $1 = -d ]]
 then 
     #egrep dictionaries and exclude rubbish logs from grep results
-    curl dict://dict.org/d:nail 2>/dev/null | grep -v "^[0-9]"
+    curl dict://dict.org/d:$2 2>/dev/null | grep -v "^[0-9]"
     exit
 fi
 
