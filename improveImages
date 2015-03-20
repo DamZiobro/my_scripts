@@ -1,7 +1,12 @@
 #!/bin/bash
 
+MAX_THREADS=4
+
 for f in $1/*.JPG $1/*.jpg $1/.PNG $1/.png $1/*.JPEG $1/*.jpeg
 do
- echo "Processing file: $f"
- convert -brightness-contrast 0x10% -modulate 100,115,100 $f $f
+ #NR_OF_CURRENTLY_RUNNING_JOBS=$((`jobs | wc -l`))
+ #sleep if all Threads are busy
+ echo -e "Processing file: $f..."
+ #echo -e "(threads in background: $NR_OF_CURRENTLY_RUNNING_JOBS)"
+ convert -brightness-contrast 0x10% -modulate 100,115,100 $f $f &
 done
