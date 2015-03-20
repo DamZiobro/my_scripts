@@ -1,8 +1,10 @@
-#/bin/bash
+#!/bin/bash
+
 input_file_directory=$2
 output_file_directory=$4
 action=$1
 files_filter="*.$3"
+parallel=$5
 
 full_filter=$input_file_directory/$files_filter
 echo -e "Full filter: $full_filter" 
@@ -13,8 +15,13 @@ for file in $full_filter ; do
   echo -e "Processing $baseName..."
   if [ "$output_file_directory" != "" ]; then
 	$action "$file" $output_file_path/"$baseName"
-  else 
-        $action "$file" 
+  else
+        if [ -z $parallel ]; then 
+            $action "$file" &
+            sleep 0.05s
+        else  
+            $action "$file" 
+        fi
   fi
   echo -e "================================"
 done
