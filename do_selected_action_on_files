@@ -26,3 +26,5 @@ for file in $full_filter ; do
   echo -e "================================"
 done
 
+#wait for each tasks to finish 
+wait

@@ -10,3 +10,6 @@ do
  #echo -e "(threads in background: $NR_OF_CURRENTLY_RUNNING_JOBS)"
  convert -brightness-contrast 0x10% -modulate 100,115,100 $f $f &
 done
+
+#wait for each tasks to finish 
+wait
