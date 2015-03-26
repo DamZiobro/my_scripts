@@ -4,6 +4,11 @@ import os
 import commands
 import sys
 
+DEBUG=False 
+
+def log(s):
+    if(DEBUG):
+        print s
 
 def getPostAndUpdateFile(postsFile, isCrawling = 0):
     if (not os.path.exists(postsFile)):
@@ -20,7 +25,7 @@ def getPostAndUpdateFile(postsFile, isCrawling = 0):
             if (isCrawling != 0):
                 f.write(postText)
             f.close()
-            print "Posting text: " + postText
+            log("Posting text: " + postText)
     return postText
     
 if __name__ == "__main__":
@@ -41,19 +46,22 @@ if __name__ == "__main__":
     #get post text
     postText = getPostAndUpdateFile(postsFile, isCrawling)
     if postText == None:
-        print ("Nothing to share...")
+        log("Nothing to share...")
         sys.exit();
 
-    print postText
+    log(postText)
     
     #post text to Tweeter
-    command = "twidge --config="+os.getenv("HOME")+"/.twidgerc "+fanpage+" update \""+str(postText)+"\""; 
-    print command
+    command = "twidge --config="+os.getenv("HOME")+"/.twidgerc"+fanpage+" update \""+str(postText)+"\""; 
+    log(command) 
     status,output = commands.getstatusoutput(command)
-    print "Twidge status: " + str(status)
+    log("Twidge status: " + str(status))
     if status == 0:
         output = "Successfully updated"
-    print "Twidge output: " + str(output)
+    else:
+        print ("Twidge command: " + command)
+        print ("Twidge outuput: " + str(output))
+    log("Twidge output: " + str(output))
     
     #post test to Facebook -TODO
 
