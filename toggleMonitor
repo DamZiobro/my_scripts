@@ -1,0 +1,21 @@
+#!/bin/bash 
+#==================================================================
+# toggle monitor focusin dual monitor mode
+MONITOR_X_SIZE=1920
+MOUSE_X=$((`xdotool getmouselocation | cut -d' ' -f1 | cut -d: -f2`))
+
+if [ $MOUSE_X -gt $MONITOR_X_SIZE ];
+then 
+    xdotool mousemove_relative -- -$MONITOR_X_SIZE 0 
+else 
+    xdotool mousemove_relative $MONITOR_X_SIZE 0 
+fi 
+
+#get Id of window under the mouse cursor 
+sedGetValue='s".*=\(.*\)"\1"'
+windowId=`xdotool getmouselocation --shell 2>/dev/null |grep WINDOW |sed "$sedGetValue"`
+#echo $windowId'"'
+
+#set focus on window under the mouse cursor
+xdotool windowfocus $windowId --sync 
+#==================================================================
