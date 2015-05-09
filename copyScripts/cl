@@ -12,10 +12,20 @@
 LINE_NUMBER=2
 if [ $# == 1 ];
 then 
-    LINE_NUMBER=$(($1+1))
+    # check if line_number is really number or regex or substring
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]] ; 
+    then
+        tmux copy-mode \; send-keys ? $1 Enter n $ h Space ^ Enter  
+    else 
+        LINE_NUMBER=$(($1+1))
+        #echo $LINE_NUMBER 
+        tmux copy-mode \; send-keys $LINE_NUMBER k $ h Space ^ Enter 
+    fi
+else
+    #echo $LINE_NUMBER 
+    tmux copy-mode \; send-keys $LINE_NUMBER k $ h Space ^ Enter 
 fi
-#echo $LINE_NUMBER 
-tmux copy-mode \; send-keys $LINE_NUMBER k $ h Space ^ Enter 
 
 COPIED_STRING=`tmux show-buffer -b 0`
 echo $COPIED_STRING
