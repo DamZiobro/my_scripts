@@ -11,11 +11,21 @@
 
 LINE_NUMBER=2
 if [ $# == 1 ];
-then 
-    LINE_NUMBER=$(($1+1))
+then
+    # check if line_number is really number or regex or substring
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]] ; 
+    then
+        tmux copy-mode \; send-keys ? $1 Enter n Space w h h Enter  
+        #echo "error: Not a number" >&2; exit 1
+    else 
+        LINE_NUMBER=$(($1+1))
+        #echo $LINE_NUMBER 
+        tmux copy-mode \; send-keys $LINE_NUMBER k h Space b Enter 
+    fi
+else 
+    tmux copy-mode \; send-keys $LINE_NUMBER k h Space b Enter 
 fi
-#echo $LINE_NUMBER 
-tmux copy-mode \; send-keys $LINE_NUMBER k h Space b Enter 
 
 COPIED_STRING=`tmux show-buffer -b 0`
 echo $COPIED_STRING
