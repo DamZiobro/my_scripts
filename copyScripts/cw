@@ -6,6 +6,12 @@
 # Distributed under terms of the MIT license.
 #
 
+# Script allow tmux-based copying word of selected phrase or line number
+# Usage:
+#  cw           -> copies last word of last line 
+#  cw 3         -> copies last word of 3rd last line 
+#  cw test      -> copies last word containing 'test'
+
 #WARNING!!!! 
 #This script works only with tmux vi-based keys mode 
 
@@ -16,7 +22,7 @@ then
     re='^[0-9]+$'
     if ! [[ $1 =~ $re ]] ; 
     then
-        tmux copy-mode \; send-keys ? $1 Enter n Space w h h Enter  
+        tmux copy-mode \; send-keys ? $1 Enter n b Space w h h Enter  
         #echo "error: Not a number" >&2; exit 1
     else 
         LINE_NUMBER=$(($1+1))

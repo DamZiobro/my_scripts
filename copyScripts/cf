@@ -6,31 +6,31 @@
 # Distributed under terms of the MIT license.
 #
 
-# Script allow tmux-based copying line of selected phrase or line number
+# Script allow tmux-based copying from selected phrase or line number
 # Usage:
-#  cl           -> copies last line 
-#  cl 3         -> copies 3rd last line 
-#  cl test      -> copies last line containing 'test'
+#  cf           -> copies from last word of last line 
+#  cf 3         -> copies from last word of 3th last line 
+#  cf test      -> copies from last word containing 'test'
 
 #WARNING!!!! 
 #This script works only with tmux vi-based keys mode 
 
 LINE_NUMBER=2
 if [ $# == 1 ];
-then 
+then
     # check if line_number is really number or regex or substring
     re='^[0-9]+$'
     if ! [[ $1 =~ $re ]] ; 
     then
-        tmux copy-mode \; send-keys ? $1 Enter n $ h Space ^ Enter  
+        tmux copy-mode \; send-keys ? $1 Enter n Space w h h 
+        #echo "error: Not a number" >&2; exit 1
     else 
         LINE_NUMBER=$(($1+1))
         #echo $LINE_NUMBER 
-        tmux copy-mode \; send-keys $LINE_NUMBER k $ h Space ^ Enter 
+        tmux copy-mode \; send-keys $LINE_NUMBER k h Space b 
     fi
-else
-    #echo $LINE_NUMBER 
-    tmux copy-mode \; send-keys $LINE_NUMBER k $ h Space ^ Enter 
+else 
+    tmux copy-mode \; send-keys $LINE_NUMBER k h Space b 
 fi
 
 COPIED_STRING=`tmux show-buffer -b 0`

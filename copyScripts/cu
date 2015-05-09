@@ -1,0 +1,146 @@
+#! /bin/bash
+#
+# c.sh
+# Copyright (C) 2015 damian <damian@damian-desktop>
+#
+# Distributed under terms of the MIT license.
+#
+
+# Script allow tmux-based copying word of selected phrase or line number
+# Usage:
+#  cu           -> copies last URL (ex. http://.,., ssh://..., rtsp://... etc.)
+#  cu 3         -> copies 3rd last URL (ex. http://.,., ssh://..., rtsp://... etc.)
+#  cu test      -> copies last URL containing test
+#  cu 172.      -> simulation of text searching mode. Here 172 will be treated as text "172" instead of line number
+
+#WARNING!!!! 
+#This script works only with tmux vi-based keys mode 
+
+#Constant definitions 
+NON_NUMBER=0
+TEXT_MODE=1
+NON_TEXT_MODE=2
+
+MAX_STEP_NUMBER=200
+
+SEARCH_TEXT=$1
+
+#getting line number if line number mode or NON_NUMBER if text mode
+LINE_NUMBER=1
+if [ $# == 1 ];
+then 
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]] ; 
+    then
+        #assign LINE_NUMBER to 0 in order to notify that substring 
+        #mode has been selected
+        LINE_NUMBER=$NON_NUMBER
+        #if last character is dot - then remove it (required simulation of test mode)
+        if [ ${1:(-1)} == "." ];
+        then
+            #remove last character from $1 (last character is . char)
+            SEARCH_TEXT=${1:0:(-1)}
+        fi 
+    else
+        LINE_NUMBER=$(($1))
+    fi
+fi
+
+KEY=Space
+STEP_NUMBER=0
+SELECTED=0
+
+while true;
+do
+    #echo $LINE_NUMBER 
+    tmux copy-mode \;
+    if [ ! $SELECTED -eq 0 ]; then 
+        tmux send-keys \? \:\/\/ Enter 
+        if [ $STEP_NUMBER -gt 0 ]; then 
+            tmux send-keys $STEP_NUMBER n
+        fi
+    fi 
+
+    while [ $SELECTED -eq 0 ];
+    do
+        tmux copy-mode \;
+        tmux send-keys \? \:\/\/ Enter 
+        if [ $STEP_NUMBER -gt 0 ]; then 
+            tmux send-keys $STEP_NUMBER n
+        fi
+
+        if [ $LINE_NUMBER -gt 1 ]; then
+            # for mode: cu LINE_NUMBER
+            tmux send-keys $(($LINE_NUMBER-1)) n
+            SELECTED=$NON_TEXT_MODE
+        elif [ $LINE_NUMBER == $NON_NUMBER ]; then
+            #for mode: cu text 
+            if [ $KEY == Space ]; then
+                #first step (before detection quotes characters around URL)
+                tmux send-keys b Space w h h Enter 
+            else 
+                #now we know (after first step of while loop )that URL address has 
+                #quote characters (' or ") around him. Therefore we will remove quotes
+                tmux send-keys b l Space w h h h Enter 
+            fi
+            COPIED_STRING=`tmux show-buffer -b 0`
+            #echo $COPIED_STRING
+            let STEP_NUMBER=$((STEP_NUMBER+1))
+            if [[ $COPIED_STRING == *"$SEARCH_TEXT"* ]]; then
+                SELECTED=$TEXT_MODE
+                if [ $KEY != Space ]; then
+                    #exit here as appropriate unquoted URL is prepared here
+                    echo $COPIED_STRING 
+                    exit 0
+                fi
+            fi
+        else 
+            #for mode: cu
+            SELECTED=$NON_TEXT_MODE
+        fi
+
+        if [ $STEP_NUMBER -gt $MAX_STEP_NUMBER ]; then
+            echo "URL not found..."
+            exit -1
+        fi
+    done
+
+    if [ $SELECTED -eq $NON_TEXT_MODE ]; then
+        if [ $KEY == Space ]; then
+            #first step (before detection quotes characters around URL)
+            tmux send-keys b Space w h h Enter 
+        else 
+            #now we know (after first step of while loop )that URL address has 
+            #quote characters (' or ") around him. Therefore we will remove quotes
+            tmux send-keys b l Space w h h h Enter 
+            COPIED_STRING=`tmux show-buffer -b 0`
+            break;
+        fi
+    fi
+
+    COPIED_STRING=`tmux show-buffer -b 0`
+    #echo "${COPIED_STRING}"
+    #echo "$KEY"
+    #if [ $KEY != Space ]; then
+        #exit -2;
+    #fi
+
+    if [[ $COPIED_STRING =~ \"[a-z]+://.*[\.|/].*\" ]]; then
+        KEY=\" 
+            SELECTED=0
+    elif [[ $COPIED_STRING =~ \'[a-z]+://.*[\.|/].*\' ]]; then
+        KEY=\'
+            SELECTED=0
+    fi
+
+    #exit if there are no quotes around URL address
+    if [ $KEY == Space ]; then 
+        break;
+    fi
+
+    #if we have quotes around URL address then KEY != Space and we have next step to 
+    #remove quotes characters from URL
+done
+
+echo $COPIED_STRING
+
