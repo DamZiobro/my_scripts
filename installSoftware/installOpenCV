@@ -6,74 +6,48 @@ echo -e "\e[00;32mSource codes will be downloaded to /tmp directory...\e[00m"
 cd /tmp
 
 echo -e "\e[00;32mInstall dependencies: chkconfig git-core subversion openssh-server\e[00m"
-sudo apt-get install git-core subversion openssh-server || exit -1
+sudo apt-get install git-core subversion openssh-server \
+    build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev \
+    python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev \
+    libvpx-dev libx264-dev x264 libv4l-dev v4l-utils libopencv-dev build-essential checkinstall cmake pkg-config \
+    yasm libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libgstreamer0.10-dev \
+    libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev \
+    libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils \
+    ffmpeg cmake qt5-default checkinstall || exit -1
 
-echo -e  "\e[00;32mRemoving old versions of video codec library x264\e[00m"
 sudo apt-get update
-sudo apt-get remove ffmpeg x264 libx264-dev || exit -1
 
-echo -e "\e[00;32mInstall gstreamer\e[00m"
-sudo apt-get install libgstreamer0.10-0 libgstreamer0.10-dev gstreamer0.10-tools gstreamer0.10-plugins-base libgstreamer-plugins-base0.10-dev gstreamer0.10-plugins-good gstreamer0.10-plugins-ugly gstreamer0.10-plugins-bad || exit -1
-
-echo -e "\e[00;32mInstall building tools\e[00m"
-sudo apt-get install build-essential checkinstall git cmake libfaac-dev libjack-jackd2-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libsdl1.2-dev libtheora-dev libva-dev libvdpau-dev libvorbis-dev libx11-dev libxfixes-dev libxvidcore-dev texi2html yasm zlib1g-dev
-
-echo -e "\e[00;32mInstall x264 library\e[00m"
-git clone git://git.videolan.org/x264.git || exit -1
-cd x264
-./configure --enable-static --enable-pic --disable-asm --enable-shared || exit -1
-make || exit -1
-sudo make install || exit -1
+echo -e  "\e[00;32mInstalling newest ffmpeg version \e[00m"
+git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
+cd ffmpeg
+./configure --enable-shared --prefix=/usr/local || exit -1
+make -j`nproc` || exit -1
+sudo make -j`nproc` install || exit -1
+sudo ldconfig /usr/local/lib || exit -1
 cd ..
-
-echo -e "\e[00;32mInstall libvpx library\e[00m"
-git clone http://git.chromium.org/webm/libvpx.git || exit -1
-cd libvpx
-./configure --enable-static --enable-pic || exit -1
-make || exit -1
-sudo make install || exit -1
-cd ..
-
-echo -e "\e[00;32mInstall ffmpeg supplementary software\e[00m"
-wget http://ffmpeg.org/releases/ffmpeg-0.7.13.tar.gz || exit -1
-tar zxvf ffmpeg-0.7.13.tar.gz || exit -1
-cd ffmpeg-0.7.13			
-./configure --enable-shared --enable-libvpx --enable-pic --enable-gpl --enable-libx264 --enable-libxvid --enable-nonfree --enable-postproc --enable-version3 --enable-x11grab --disable-ffserver || exit -1
-make || exit -1
-sudo make install || exit -1
-cd ..
-
-echo -e "\e[00;32mInstall libjpeg library\e[00m"
-sudo apt-get install libjpeg62 libjpeg62-dev || exit -1
-
-echo -e "\e[00;32mInstall vidoe4linux library\e[00m"
-wget http://www.linuxtv.org/downloads/v4l-utils/v4l-utils-0.8.5.tar.bz2 || exit -1
-tar xvjf v4l-utils-0.8.5.tar.bz2 || exit -1
-cd v4l-utils-0.8.5
-make || exit -1
-sudo make install || exit -1
-cd ..
-
-echo -e "\e[00;32mInstall gtk library\e[00m"
-sudo apt-get install libgtk2.0-0 libgtk2.0-dev
 
 echo -e "\e[00;32mInstall OpenCV library \e[00m"
-wget http://garr.dl.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.8/opencv-2.4.8.zip || exit -1
-unzip opencv-2.4.8.zip || exit -1
-cd opencv-2.4.8
-mkdir buildRelease || exit -1
+git clone https://github.com/Itseez/opencv
+cd opencv
+if [ ! -z $1 ]; then 
+    git checkout tags/$1
+fi
+mkdir -p buildRelease || exit -1
 cd buildRelease
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D BUILD_NEW_PYTHON_SUPPORT=ON -D BUILD_EXAMPLES=ON .. || exit -1
-make -j4 || exit -1
-sudo make -j4 install || exit -1
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D BUILD_EXAMPLES=ON -D WITH_FFMPEG=ON -D WITH_TBB=ON -D WITH_QT=ON .. || exit -1
+exit 1
+make -j`nproc` || exit -1
+sudo make -j`nproc` install || exit -1
 cd ..
-
 
 echo -e "\e[00;32mExporting library to global path\e[00m"
 sudo ldconfig /usr/local/lib || exit -1
 
 echo -e "\e[00;32mCleaning after installation\e[00m"
 
-echo -e "\e[00;32mInstallation finished successfully\e[00m"
+echo -e "OpenCV version installed: "
+checkOpenCVVersion
 
+echo -e "\e[00;32mInstallation finished successfully\e[00m"
 
