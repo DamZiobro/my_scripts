@@ -1,9 +1,0 @@
-#!/bin/bash 
-
-while true; do
-  sync
-  echo 3 > /proc/sys/vm/drop_caches
-  cat /proc/`pidof $1 | cut -d ' ' -f 2`/statm | cut -d ' ' -f 2
-  sleep 2
-done
-

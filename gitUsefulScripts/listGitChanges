@@ -1,2 +1,0 @@
-#!/bin/bash 
-git --no-pager log --pretty=format:'%h : %s' $2..HEAD | grep -e $1
