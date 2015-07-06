@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ $# = 0 ]
+then
+        echo "$0: musisz podać w parametrze katalogi, które chcesz oczyścić z plików tymczasowych"
+        exit 1
+else
+        for i in $*
+        do
+                if [ -d $i ]
+                then
+                        find $i -type d -exec bash -c 'rm {}/*~' \;
+                        echo "$0: $i został wyczyszczony z plików tymczasowych"
+
+                else
+                        echo "$0: podany katalog: $i nie istnieje "
+                        exit 1
+                fi
+        done
+fi

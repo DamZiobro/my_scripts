@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if `lsmod | grep -q psmouse`
+then 
+	sudo rmmod psmouse
+	notify-send -i pda -u low "Touchpad" "Touchpad disabled" 
+else 
+	sudo modprobe psmouse
+	notify-send -i pda -u low "Touchpad" "Touchpad enabled" 
+fi

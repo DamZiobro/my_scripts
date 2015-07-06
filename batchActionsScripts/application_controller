@@ -1,0 +1,29 @@
+#!/bin/bash
+
+CHECKINGPERIOD=2                  # in sec
+MYEMAIL="ziobro.damian@gmail.com"           # where to send info
+
+APPLICATION_NAME=$1
+MAILSTOP=0                         # switcher for mail sending
+
+while [ 1=1 ];
+do
+
+    if [ ! "$(pidof $APPLICATION_NAME)" ]
+    then
+        if [ "$MAILSTOP" = "0" ]; then
+        echo "WARNING! $APPLICATION_NAME crashed!" | mail -s "$APPLICATION_NAME crash." "$MYEMAIL"
+        echo "WARNING! $APPLICATION_NAME crashed!"
+                MAILSTOP=1
+        fi
+        /usr/sbin/asterisk -vvvvvv
+    else
+	if [ "$MAILSTOP" = "1" ]; then
+        echo "$APPLICATION_NAME was successfully restarted." | mail -s "$APPLICATION_NAME restarted." "$MYEMAIL"
+        echo "$APPLICATION_NAME was succesfully restarted."
+		MAILSTOP=0
+        fi
+    fi                                                                                                            
+    sleep $CHECKINGPERIOD
+                                                                    
+done

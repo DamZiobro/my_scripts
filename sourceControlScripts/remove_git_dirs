@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "recursively removing .git folders from"
+pwd 
+
+#run removing tasks in background 
+rm -rf `find . -name .git` &
+rm -rf `find . -name .gitignore` & 
+
+#wait all jobs to finish
+wait

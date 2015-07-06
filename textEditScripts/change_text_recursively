@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# $1 - directory where text should be changed
+# $2 - text which should be removed
+# $3 - text which should be put against replaced text
+
+grep -rHl --exclude-dir="*.svn" --exclude-dir="*.git" $2 $1 | xargs sed -i "s/$2/$3/g"
