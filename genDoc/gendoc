@@ -17,8 +17,12 @@ then
     exit $E_BADARGS
 fi
 
+if [ -z $DOXYFILE_ORIG ]; then 
+    echo -e "ERROR: DOXYFILE_ORIG is not defined - you must define global variable DOXYFILE_ORIG"
+    exit -1
+fi
+
 SOURCE_DIR=`abspath $1`
-DOXYFILE_ORIG=./Doxyfile
 DOC_DIR=$SOURCE_DIR/doc
 DOXYFILE=$DOC_DIR/Doxyfile
 
