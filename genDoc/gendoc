@@ -1,0 +1,62 @@
+#! /bin/bash
+#
+# gendoc
+# Author: Damian Ziobro <damian@xmementoit.com>
+
+abspath() {                                               
+    builtin cd "$(dirname "$1")"
+    printf "%s/%s\n" "$(pwd)" "$(basename "$1")"
+    builtin cd "$OLDPWD"
+}
+
+E_BADARGS=65
+if [ $# -ne 1 ];
+then 
+    echo "ERROR: wrong number of arguments..."
+    echo "Usage: `basename ` source_dir"
+    exit $E_BADARGS
+fi
+
+SOURCE_DIR=`abspath $1`
+DOXYFILE_ORIG=./Doxyfile
+DOC_DIR=$SOURCE_DIR/doc
+DOXYFILE=$DOC_DIR/Doxyfile
+
+echo -e "Source absolute path $SOURCE_DIR"
+echo -e "Output doc dir is: $DOC_DIR"
+
+which doxygen > /dev/null || { echo -e "WARNING!!! Doxygen tool is not installed on this machine/container. Please install it using: sudo apt-get install doxygen graphviz"; exit -1; }
+
+if [ ! -d $DOC_DIR ]; then 
+    echo -e "WARNING: $DOC_DIR dir does not exist... Creating it..."
+    mkdir -p $DOC_DIR
+fi 
+
+echo -e "Copying $DOXYFILE_ORIG to $DOXYFILE"
+cp $DOXYFILE_ORIG $DOXYFILE
+
+if [ ! -e $DOXYFILE ];  then
+    echo -e "ERROR: something is wrong $DOXYFILE does not exist..."
+    exit -1
+fi
+#remove last 3 lines if those are lines previously pushed (using echo) by making docs
+
+
+if [[ `cat $DOXYFILE | tail -n1` == INPUT* ]]; then head -n -3 $DOXYFILE > /tmp/doxy && cp /tmp/doxy $DOXYFILE; fi
+echo "OUTPUT_DIRECTORY=$DOC_DIR" >> $DOXYFILE
+echo "PROJECT_NAME=\"`basename $SOURCE_DIR`\"" >> $DOXYFILE
+echo "INPUT"=$SOURCE_DIR >> $DOXYFILE
+doxygen $DOXYFILE || exit -1
+
+#remove last 3 lines if those are lines previously pushed (using echo) by making docs
+if [[ `cat $DOXYFILE | tail -n1` == INPUT* ]]; then head -n -3 $DOXYFILE > /tmp/doxy && cp /tmp/doxy $DOXYFILE; fi
+
+#if browser variable is defined, then open documentation root 
+if [ ! -z $BROWSER ]; then 
+    $BROWSER $DOC_DIR/html/index.html 
+fi
+echo -e "===================================================================="
+echo -e "Documentation for source code from dir ===> '$SOURCE_DIR' <=== built successfully..."
+echo -e "Documentation root file is: $DOC_DIR/html/index.html"
+echo -e "===================================================================="
+
