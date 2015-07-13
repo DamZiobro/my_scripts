@@ -19,6 +19,7 @@ fi
 
 if [ -z $DOXYFILE_ORIG ]; then 
     echo -e "ERROR: DOXYFILE_ORIG is not defined - you must define global variable DOXYFILE_ORIG"
+    echo -e "       ex. export DOXYFILE_ORIG=$HOME/usefulScripts/genDoc/Doxyfile"
     exit -1
 fi
 
