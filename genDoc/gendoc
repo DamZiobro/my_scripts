@@ -57,9 +57,9 @@ doxygen $DOXYFILE || exit -1
 if [[ `cat $DOXYFILE | tail -n1` == INPUT* ]]; then head -n -3 $DOXYFILE > /tmp/doxy && cp /tmp/doxy $DOXYFILE; fi
 
 #if browser variable is defined, then open documentation root 
-if [ ! -z $BROWSER ]; then 
-    $BROWSER $DOC_DIR/html/index.html 
-fi
+#if [ ! -z $BROWSER ]; then 
+    xdg-open $DOC_DIR/html/index.html 
+#fi
 echo -e "===================================================================="
 echo -e "Documentation for source code from dir ===> '$SOURCE_DIR' <=== built successfully..."
 echo -e "Documentation root file is: $DOC_DIR/html/index.html"
