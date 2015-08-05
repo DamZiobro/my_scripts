@@ -2,10 +2,14 @@
 
 PREFIX=/usr/local 
 
+hecho () {
+        printf "\e[7m%-`tput cols`s\e[0m\n" "$1"
+}
+
 function installGStreamerComponent {
-    echo -e "============================================================"
-    echo -e "Installing $1"
-    echo -e "============================================================"
+    hecho "============================================================"
+    hecho "Installing $1"
+    hecho "============================================================"
 
     wget http://gstreamer.freedesktop.org/src/$1/$1-$2\.tar.xz || exit -1
     tar xvf $1-$2\.tar.xz || exit -1 
@@ -26,7 +30,6 @@ fi
 
 if [ $# == 2 ];
 then 
-    echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
     echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
     sudo rm -r /usr/local/include/gstreamer-1.0
     cd /usr/local/lib 

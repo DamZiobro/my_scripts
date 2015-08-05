@@ -1,11 +1,14 @@
 #!/bin/bash
+hecho () {
+        printf "\e[7m%-`tput cols`s\e[0m\n" "$1"
+}
+        
+hecho "====== OPENCV INSTALL ======"
 
-echo -e "\e[00;32m====== OPENCV INSTALL ======\e[00m"
-
-echo -e "\e[00;32mSource codes will be downloaded to /tmp directory...\e[00m"
+hecho "Source codes will be downloaded to /tmp directory..."
 cd /tmp
 
-echo -e "\e[00;32mInstall dependencies: chkconfig git-core subversion openssh-server\e[00m"
+hecho "Install dependencies: chkconfig git-core subversion openssh-server"
 sudo apt-get install git-core subversion openssh-server \
     build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev \
     python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev \
@@ -17,7 +20,7 @@ sudo apt-get install git-core subversion openssh-server \
 
 sudo apt-get update
 
-echo -e  "\e[00;32mInstalling newest ffmpeg version \e[00m"
+hecho  "Installing newest ffmpeg version "
 git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg
 cd ffmpeg
 ./configure --enable-shared --prefix=/usr/local || exit -1
@@ -26,7 +29,7 @@ sudo make -j`nproc` install || exit -1
 sudo ldconfig /usr/local/lib || exit -1
 cd ..
 
-echo -e "\e[00;32mInstall OpenCV library \e[00m"
+hecho "Install OpenCV library "
 git clone https://github.com/Itseez/opencv
 cd opencv
 if [ ! -z $1 ]; then 
@@ -41,13 +44,13 @@ make -j`nproc` || exit -1
 sudo make -j`nproc` install || exit -1
 cd ..
 
-echo -e "\e[00;32mExporting library to global path\e[00m"
+hecho "Exporting library to global path"
 sudo ldconfig /usr/local/lib || exit -1
 
-echo -e "\e[00;32mCleaning after installation\e[00m"
+hecho "Cleaning after installation"
 
-echo -e "OpenCV version installed: "
+hecho "OpenCV version installed: "
 checkOpenCVVersion
 
-echo -e "\e[00;32mInstallation finished successfully\e[00m"
+hecho "Installation finished successfully"
 

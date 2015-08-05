@@ -2,10 +2,14 @@
 
 PREFIX=/usr/local 
 
+hecho () {
+        printf "\e[7m%-`tput cols`s\e[0m\n" "$1"
+}
+
 function installGStreamerComponent {
-    echo -e "============================================================"
-    echo -e "Installing $1"
-    echo -e "============================================================"
+    hecho "============================================================"
+    hecho "Installing $1"
+    hecho "============================================================"
 
     git clone git://anongit.freedesktop.org/gstreamer/$1 || exit -1
     cd $1 || exit -1
