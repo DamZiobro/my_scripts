@@ -1,0 +1,9 @@
+#!/bin/bash 
+
+killall chrome 
+killall thunderbird 
+killall skype 
+killall gnome-terminal 
+killall synergy
+
+notify-send -t 8000 -i system-users "Killing workspaces configuration..." "$0"

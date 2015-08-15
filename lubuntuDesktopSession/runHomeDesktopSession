@@ -1,0 +1,42 @@
+#!/bin/bash 
+
+if [[ "$1" = "--stop" ]]
+then
+ echo -e "Stopping "
+ killall chrome 
+ killall thunderbird 
+ killall skype 
+ killall gnome-terminal 
+ exit 0
+fi
+
+notify-send -t 8000 -i system-users "Starting Desktop workspaces configuration..." "$0"
+
+#Switches to workspace 0 - opening web browser 
+wmctrl -s 0 
+google-chrome --restore-last-session &
+sleep 5 
+
+#Switches to workspace 1 - opening gnome-terminal
+wmctrl -s 1
+gnome-terminal --full-screen &
+sleep 1
+
+#Switches to workspace 3 - opening thunderbird
+wmctrl -s 3
+thunderbird &
+sleep 5
+
+#Switches to workspace 4 - opening skypes
+wmctrl -s 2
+skype &
+sleep 1
+skype --dbpath=~/.Skype.xmementoit &
+sleep 4
+
+#focus on terminal 
+wmctrl -s 1 
+sleep 1
+
+#show popup 
+notify-send -t 8000 -i system-users "Desktop workspaces configuration ready..." "$0"
