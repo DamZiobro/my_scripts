@@ -21,7 +21,6 @@ notify-send -t 8000 -i system-users "Starting Desktop workspaces configuration..
 #Switches to workspace 0 - opening web browser 
 wmctrl -s 0 
 google-chrome --restore-last-session &
-synergy &
 sleep 5 
 
 #Switches to workspace 1 - opening gnome-terminal
@@ -40,6 +39,10 @@ skype &
 sleep 1
 skype --dbpath=~/.Skype.xmementoit &
 sleep 4
+
+wmctrl -s 1
+synergy &
+sleep 2 
 
 #focus on terminal 
 wmctrl -s 1 
