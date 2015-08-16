@@ -12,6 +12,7 @@ then
  killall thunderbird 
  killall skype 
  killall gnome-terminal 
+ killall synergy
  exit 0
 fi
 
@@ -20,6 +21,7 @@ notify-send -t 8000 -i system-users "Starting Desktop workspaces configuration..
 #Switches to workspace 0 - opening web browser 
 wmctrl -s 0 
 google-chrome --restore-last-session &
+synergy &
 sleep 5 
 
 #Switches to workspace 1 - opening gnome-terminal
