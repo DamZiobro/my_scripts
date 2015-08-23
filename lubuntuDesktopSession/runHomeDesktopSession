@@ -25,7 +25,7 @@ sleep 5
 
 #Switches to workspace 1 - opening gnome-terminal
 wmctrl -s 1
-gnome-terminal --full-screen --hide-sidebar &
+gnome-terminal --full-screen --hide-menubar &
 sleep 1
 
 #Switches to workspace 3 - opening thunderbird
