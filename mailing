@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 SUBJECT=$2
 TO=$1
 FROM="Damian Ziobro"
