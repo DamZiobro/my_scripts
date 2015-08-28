@@ -1,0 +1,22 @@
+#!/usr/bin/python 
+
+import os
+import sys 
+
+inputDirectory = sys.argv[1]
+
+print "Input directory: " + inputDirectory
+print "Converting PSD to JPG"
+
+for file in os.listdir(inputDirectory):
+    if(file.endswith(".psd")):
+        print "File: " + file 
+        command = "convert " + inputDirectory + "/" + file + "[0] " + inputDirectory + "/" + file + ".jpg"
+        os.system(command);
+
+
+print "Removing PSD file"
+os.system("rm " + inputDirectory + "/*.psd");
+
+print "\n   Converting finished \n"
+

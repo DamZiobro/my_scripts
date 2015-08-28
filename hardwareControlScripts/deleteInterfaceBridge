@@ -1,0 +1,29 @@
+#!/bin/bash
+
+EXPECTED_ARGS=0
+OPTIONAL_ARGS=1
+
+if [ $# -ne $EXPECTED_ARGS ] && [ $# -ne $OPTIONAL_ARGS ]
+then
+      echo "ERROR: incorrect arguments"
+      echo "Usage: `basename $0` [bridgeName]"
+      echo "Ex. 1: `basename $0` - this will delete bridge named br0 (default bridge name)"
+      echo "Ex. 2: `basename $0` myBridge1 - this will delete interface named myBridge1"
+      exit -1
+fi
+
+
+bridgeName="br0"
+if [ $# == $OPTIONAL_ARGS ]
+then 
+  bridgeName=$1
+fi
+
+echo -e "Bringing bridge down"
+sudo ifconfig $bridgeName down || exit -1
+
+echo -e "Delete bridge interface: $bridgeName "
+sudo brctl delbr $bridgeName || exit -1
+
+echo -e "\nBridge $bridgeName deleted successfully!\n"
+

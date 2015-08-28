@@ -1,0 +1,46 @@
+#!/bin/bash
+
+EXPECTED_ARGS=2
+OPTIONAL_ARGS=3
+
+if [ $# -ne $EXPECTED_ARGS ] && [ $# -ne $OPTIONAL_ARGS ]
+then
+      echo "ERROR: incorrect arguments"
+      echo "Usage: `basename $0` firstInterfaceName secondInterfaceName [bridgeName]"
+      echo "Ex. 1: `basename $0` eth0 eth1 - this will create interface named br0 (default bridge name) between interfaces eth0 and eth1"
+      echo "Ex. 2: `basename $0` eth0 eth1 myBridge1 - this will create interface named myBridge1 between interfaces eth0 and eth1"
+      exit -1
+fi
+
+interfaceOne=$1
+interfaceTwo=$2
+bridgeName="br0"
+if [ $# == $OPTIONAL_ARGS ]
+then 
+  bridgeName=$3
+fi
+
+
+echo -e "Create bridge interface: $bridgeName "
+sudo brctl addbr $bridgeName || exit -1
+
+echo -e "Enable STP support for bridge"
+sudo brctl stp $bridgeName on || exit -1
+
+#echo -e "Disabling IP addresses for bridge interfaces"
+#sudo ifconfig $interfaceOne 0.0.0.0 down || exit -1
+#sudo ifconfig $interfaceTwo 0.0.0.0 down || exit -1
+
+echo -e "Attach seleted interfaces to the bridge"
+sudo brctl addif $bridgeName $interfaceOne || exit -1
+sudo brctl addif $bridgeName $interfaceTwo || exit -1
+
+echo -e "Enabling interfaces and bringing bridge up"
+sudo ifconfig $interfaceOne up || exit -1
+sudo ifconfig $interfaceTwo up || exit -1
+sudo ifconfig $bridgeName up || exit -1
+
+echo -e "\n INFO: Bridge should now be ready for use, however there may be a delay before traffic starts to flow (typically about 30 seconds if STP is enabled or half that if not)"
+
+echo -e "\n   Bridge $bridgeName between interfaces $interfaceOne $interfaceTwo has been installed successfully!\n"
+

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# This function required in order to run gconftool-2 and notify-send from cron
+# ================================================== ====
+function export_variables
+{
+user=$( whoami )
+pid=$( pgrep -u $user gnome-panel )
+
+for dbusenv in $pid; do
+DBUS_SESSION_BUS_ADDRESS=$( grep -z DBUS_SESSION_BUS_ADDRESS /proc/$pid/environ | sed -e 's/DBUS_SESSION_BUS_ADDRESS=//' )
+
+data="DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS"
+eval " export $data"
+done
+}
+# ================================================== ====
+export_variables
+# =====
+################################################## ##################
+
+
+#### HERE IS SUITABLE SCRIPT
+
+
+IMGS="/home/damian/Pictures"
+COUNT=`eval find $IMGS -type f -name "*.jpg" | wc -l`
+NUM=$(($RANDOM % $COUNT))
+PIC=`eval find $IMGS -type f -name "*.jpg" | head -n $NUM | tail -n1`
+#/usr/bin/gconftool-2 --type string  --set /desktop/gnome/background/picture_filename "$PIC"
+gsettings set org.gnome.desktop.background picture-uri "file://$PIC"
+echo "Background changed to: $PIC"

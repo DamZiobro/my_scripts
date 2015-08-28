@@ -1,0 +1,60 @@
+#!/bin/bash
+
+#Skrypt nalezy uruchamiac z parametrem.
+#Parametrem jest katalog z obrazkami, ktore chcemy zmniejszyc
+#Zmienna SIZE odpowiada za rozmiar nowego obrazka.
+#Zmienna JAKOSC, a wlasciwie procenty w zmiennej okreslaja... jakosc
+#obrazka
+#Katalog z plikami wynikowym jest w tym samy katalogu co zrodlowy, 
+#ale zawirajacy koncowke _small
+
+CONVERT=`which convert`
+RESIZE='-resize'
+JAKOSC='-quality 85%'
+SIZE=$2
+KATALOG=$1
+E=`echo`
+
+
+if [ ! -x $CONVERT ]; then
+    echo "Musisz mieć zainstalowany program convert z pakietu imagemagick "
+        exit 1
+	fi
+
+if [ $E "$1" = "" ];then
+echo "Uruchom mnie przez $0 /scizeka/do/katalogu/ze/zdjeciami rozmiar_w_formacie_WIDTHxHEIGHT"
+	exit 1
+	fi
+
+
+if [ ! -e "$1" ];then
+	echo "Potrzebuje czegos do konwersji!"
+	exit 1
+fi
+
+
+if [ ! -d "$1" ];then
+	echo "Podaj katalog!!"
+	exit 1
+fi
+
+
+WYNIK="`basename "$1"`_small"
+ 
+cd "$1"
+
+test -d ../"$WYNIK" || mkdir ../"`basename "$1"`_small"
+
+	
+for plik in *;  
+do
+if [ $E "`file -ib $plik | cut -c 1-5`"  = "image" ]; then
+	echo "Przetwarzanie $plik..."
+	$CONVERT  $plik $RESIZE $SIZE $JAKOSC  ../"$WYNIK/small-$plik"
+	else 
+	echo "Pomijam $plik"
+fi
+  done
+
+  echo "Przetwarzanie zakończone!"
+exit 0
