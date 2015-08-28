@@ -2,7 +2,7 @@
 
 export DISPLAY=:0
 
-VOCABULARY_FILE="$HOME/scripts/usefulScripts/vocabularyLearner/vocabulary.txt"
+VOCABULARY_FILE="$HOME/.dotfiles/usefulScripts/vocabularyLearner/vocabulary.txt"
 NUMBER_OF_VOCABULARY_IN_FILE=`cat $VOCABULARY_FILE | wc -l`
 NUM=$(($RANDOM % $NUMBER_OF_VOCABULARY_IN_FILE))
 NUM=`expr $NUM + 1`

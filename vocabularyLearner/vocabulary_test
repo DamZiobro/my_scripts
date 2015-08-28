@@ -5,7 +5,7 @@ import sys
 import random
 from prettytable import *
 
-VOCABULARY_FILENAME = os.getenv("HOME") + "/scripts/usefulScripts/vocabularyLearner/vocabulary.txt"
+VOCABULARY_FILENAME = os.getenv("HOME") + "/.dotfiles/usefulScripts/vocabularyLearner/vocabulary.txt"
 NUMBER_OF_ITEMS = 10
 POL_ANG = 0
 

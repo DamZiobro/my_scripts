@@ -5,5 +5,5 @@ PHRASE_TO_TRANSLATE=$2
 
 COMPOSED_PHRASE=$PHRASE_TO_ADD" > "$PHRASE_TO_TRANSLATE
 
-echo "$COMPOSED_PHRASE" >> ~/scripts/usefulScripts/vocabularyLearner/vocabulary.txt
+echo "$COMPOSED_PHRASE" >> $HOME/.dotfiles/usefulScripts/vocabularyLearner/vocabulary.txt
 
