@@ -35,8 +35,8 @@ def namestr(obj, namespace):
         return None
 
 def addRepetitionSchedule(title):
-    #repetitionFrequancies = [TEN_MINUTES, ONE_HOUR, SIX_HOURS, HOURS_24, HOURS_48, ONE_WEEK, ONE_MONTH, SIX_MONTHS, ONE_YEAR]
-    repetitionFrequancies = [TEN_MINUTES, HOURS_24]
+    repetitionFrequancies = [TEN_MINUTES, ONE_HOUR, SIX_HOURS, HOURS_24, HOURS_48, ONE_WEEK, ONE_MONTH, SIX_MONTHS, ONE_YEAR]
+    #repetitionFrequancies = [TEN_MINUTES, HOURS_24]
 
     commandBasic = "gcalcli --calendar 'Repetitions' --duration 30 --reminder 10 --where GMT --description '' "
 
@@ -66,7 +66,8 @@ def main():
   addRepetitionSchedule(title)
   print ("===========================================================================")
   print ("Adding title: '" + title + "' to RepetitionList.txt Google Drive file")
-  os.system("appendLineToGDriveFile RepetitionList.txt \"" + title +"\"");
+  #os.system("appendLineToGDriveFile RepetitionList.txt \"" + title +"\"");
+  os.system("echo " + title + " >> " + os.getenv("HOME") + "/Documents/RepetitionList.txt");
   print ("===========================================================================")
 
 if __name__ == '__main__':
