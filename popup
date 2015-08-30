@@ -1,8 +1,6 @@
 #!/bin/bash
 
-export DISPLAY=:0
-
-espeak -v en "$1"
-zenity --info --text="$1"
+DISPLAY=:0 espeak -v en "$1"
+DISPLAY=:0 zenity --info --text="$1"
 
 
