@@ -67,7 +67,7 @@ def main():
   print ("===========================================================================")
   print ("Adding title: '" + title + "' to RepetitionList.txt Google Drive file")
   #os.system("appendLineToGDriveFile RepetitionList.txt \"" + title +"\"");
-  os.system("echo " + title + " >> " + os.getenv("HOME") + "/Documents/RepetitionList.txt");
+  os.system("echo " + title + " >> " + os.getenv("DATA_DIR") + "/Documents/RepetitionList.txt");
   print ("===========================================================================")
 
 if __name__ == '__main__':
