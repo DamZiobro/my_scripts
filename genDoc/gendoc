@@ -10,12 +10,19 @@ abspath() {
 }
 
 E_BADARGS=65
-if [ $# -ne 1 ];
+if [ $# -gt 1 ];
 then 
     echo "ERROR: wrong number of arguments..."
-    echo "Usage: `basename ` source_dir"
+    echo "Usage: `basename ` [source_dir]"
+    echo "      source_dir - optional path to root dir of source which should be used for generation doc (default: current dir)"
     exit $E_BADARGS
 fi
+SRC_DIR=`pwd`
+if [ $# == 1 ]; 
+then 
+   SRC_DIR=$1 
+fi
+
 
 if [ -z $DOXYFILE_ORIG ]; then 
     echo -e "ERROR: DOXYFILE_ORIG is not defined - you must define global variable DOXYFILE_ORIG"
@@ -23,7 +30,7 @@ if [ -z $DOXYFILE_ORIG ]; then
     exit -1
 fi
 
-SOURCE_DIR=`abspath $1`
+SOURCE_DIR=`abspath $SRC_DIR`
 DOC_DIR=$SOURCE_DIR/doc
 DOXYFILE=$DOC_DIR/Doxyfile
 
