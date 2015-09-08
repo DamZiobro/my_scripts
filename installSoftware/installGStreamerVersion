@@ -47,4 +47,5 @@ installGStreamerComponent gst-plugins-good $1
 installGStreamerComponent gst-plugins-bad $1 
 installGStreamerComponent gst-plugins-ugly $1 
 installGStreamerComponent gst-rtsp-server $1 
+installGStreamerComponent gst-libav $1 
 
