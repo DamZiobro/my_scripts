@@ -31,7 +31,9 @@ sudo killall -9 valgrind 2> /dev/null
 sleep 1
 
 valgrind --tool=$TOOL "$COMMAND_WITH_ARGUMENTS" &
+echo -e "========================================="
 echo -e "Testing by $TIME seconds. Please wait..."
+echo -e "========================================="
 sleep 1
 TOOL_PID=`pgrep $TOOL`
 sleep $TIME
@@ -40,9 +42,9 @@ sudo kill $TOOL_PID
 if [ $TOOL == "massif" ]; then 
     sudo chmod 777 massif.out.$TOOL_PID 
     mv massif.out.$TOOL_PID /tmp
-    ms_print /tmp/massif.out.$TOOL_PID | tee /tmp/massif.out.$TOOL_PID\.report.txt
+    ms_print /tmp/massif.out.$TOOL_PID | tee /tmp/report_massif.out.$TOOL_PID
     echo -e "========================================="
-    echo -e "\n     Result saved to: /tmp/massif.out.$TOOL_PID\.report.txt\n"
+    echo -e "\n     Result saved to: /tmp/report_massif.out.$TOOL_PID\n"
     echo -e "========================================="
 fi
 
