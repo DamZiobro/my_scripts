@@ -1,0 +1,51 @@
+#!/bin/bash 
+
+which valgrind > /dev/null 
+if [ $? != 0 ]; then 
+    echo "WARNING!!!! valgrind is not installed. Installing valgrind..."
+    sudo apt-get install valgrind
+fi
+
+E_BADARGS=65
+if [ $# -ne 1 -a $# -ne 2 ];
+then 
+    echo "ERROR: wrong number of arguments..."
+    echo "Usage: `basename ` \"'COMMAND_WITH_ARGUMENTS\" [TIME_OF_TEST]"
+    echo "      - COMMAND_WITH_ARGUMENTS - command which should be run for memory check"
+    echo "      - TIME_OF_TEST - optional argument presenting maximum time of memory test [in seconds] - 300 seconds by default"
+    exit $E_BADARGS
+fi
+
+TOOL=massif
+TIME=60
+COMMAND_WITH_ARGUMENTS="$1"
+
+if [ ! -z $2 ]; then 
+   TIME=$2
+fi
+
+echo -e "\$COMMAND_WITH_ARGUMENTS = $COMMAND_WITH_ARGUMENTS"
+echo -e "\$TIME = $TIME"
+
+sudo killall -9 valgrind 2> /dev/null
+sleep 1
+
+valgrind --tool=$TOOL "$COMMAND_WITH_ARGUMENTS" &
+echo -e "Testing by $TIME seconds. Please wait..."
+sleep 1
+TOOL_PID=`pgrep $TOOL`
+sleep $TIME
+sudo kill $TOOL_PID
+
+if [ $TOOL == "massif" ]; then 
+    sudo chmod 777 massif.out.$TOOL_PID 
+    mv massif.out.$TOOL_PID /tmp
+    ms_print /tmp/massif.out.$TOOL_PID | tee /tmp/massif.out.$TOOL_PID\.report.txt
+    echo -e "========================================="
+    echo -e "\n     Result saved to: /tmp/massif.out.$TOOL_PID\.report.txt\n"
+    echo -e "========================================="
+fi
+
+echo -e "Waiting for finish all background jobs"
+wait 
+echo -e "Finish successfully"
