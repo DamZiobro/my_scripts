@@ -17,5 +17,5 @@ windowId=`xdotool getmouselocation --shell 2>/dev/null |grep WINDOW |sed "$sedGe
 #echo $windowId'"'
 
 #set focus on window under the mouse cursor
-xdotool windowfocus $windowId --sync 
+xdotool windowfocus $windowId 
 #==================================================================
