@@ -401,3 +401,4 @@ eftovers > resztki
 feasible > wykonalny
 peerless > niezrównany
 disruption > zakłócenie
+grace > łaska
