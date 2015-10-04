@@ -405,3 +405,5 @@ grace > łaska
 site-by-site > obok siebie
 awkward > niezręczny
 edible > jadalny
+slump > kryzys
+stolid > powściągliwy
