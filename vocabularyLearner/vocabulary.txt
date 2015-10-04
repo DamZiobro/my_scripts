@@ -402,3 +402,6 @@ feasible > wykonalny
 peerless > niezrównany
 disruption > zakłócenie
 grace > łaska
+site-by-site > obok siebie
+awkward > niezręczny
+edible > jadalny
