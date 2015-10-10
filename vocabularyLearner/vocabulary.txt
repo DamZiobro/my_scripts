@@ -407,3 +407,4 @@ awkward > niezręczny
 edible > jadalny
 slump > kryzys
 stolid > powściągliwy
+astute > bystry
