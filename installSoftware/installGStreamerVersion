@@ -37,6 +37,10 @@ then
     cd -
 fi
 
+#install prerequisities
+echo -e "Installing prerequisities from apt-get..."
+sudo apt-get install libtool autotools pkg-config gtk-doc-tools libglib-2.0.0 libglib-2.0-dev
+
 GSTREAMER_DIR=gstreamerInstall
 mkdir $GSTREAMER_DIR
 cd $GSTREAMER_DIR
