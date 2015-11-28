@@ -30,9 +30,9 @@ else
     "radio_krakow") adres="http://www.radio.pionier.net.pl/stream.pls?radio=radiokrakow" ;;   
     "vox_fm") adres="http://www.radio.pionier.net.pl/stream.pls?radio=voxfm" ;;
     "radio17") adres="http://www.radio17.pl/radio17.m3u" ;;
-    "polskie_radio_trojka") adres="http://www.polskieradio.pl/st/program3M.asx" ;;
-    "polskie_radio_dwojka") adres="http://www.polskieradio.pl/st/program2.asx" ;;
-    "polskie_radio_jedynka") adres="http://www.polskieradio.pl/st/program1M.asx" ;;
+    "polskie_radio_trojka") adres="http://stream3.polskieradio.pl:8904/listen.pls" ;;
+    "polskie_radio_dwojka") adres="http://stream3.polskieradio.pl:8902/listen.pls" ;;
+    "polskie_radio_jedynka") adres="http://stream3.polskieradio.pl:8900/listen.pls" ;;
     "bbc1") adres="http://www.listenlive.eu/bbcradio1.m3u" ;;
     "bbc2") adres="http://www.listenlive.eu/bbcradio2.m3u" ;;
     "bbc3") adres="http://www.listenlive.eu/bbcradio3.m3u" ;;
