@@ -21,7 +21,7 @@ if(len(sys.argv) < 2 or len(sys.argv) > 5):
 url = sys.argv[1]
 category = "General"
 fanpages = ["DamianZiobro"]
-outputDirPath = os.getenv("GDRIVE_DIR");
+outputDirPath = os.getenv("HOME")+ "/.dotfiles";
 # =================================================
 
 titleText = ""

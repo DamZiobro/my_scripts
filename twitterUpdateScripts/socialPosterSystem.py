@@ -36,7 +36,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 4:
         isCrawling = int(sys.argv[3])
         
-    griveFolder = "/opt/gdrive/"
+    griveFolder = os.getenv("HOME")+ "/.dotfiles/"
     postsFile = griveFolder + "postFiles/PostTo"+fanpage+"_"+section+".txt"
     
     #update post files
