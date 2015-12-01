@@ -11,9 +11,18 @@ function installGStreamerComponent {
     hecho "Installing $1"
     hecho "============================================================"
 
-    wget http://gstreamer.freedesktop.org/src/$1/$1-$2\.tar.xz || exit -1
-    tar xvf $1-$2\.tar.xz || exit -1 
-    cd $1-$2 || exit -1
+    DIR_NAME="$1-$2"
+    FILENAME="$DIR_NAME.tar.xz"
+    if [ -f "$FILENAME" ]; then 
+        rm -f $FILENAME
+    fi
+    if [ -d "$DIR_NAME" ]; then 
+        rm -rf $DIR_NAME
+    fi
+
+    wget http://gstreamer.freedesktop.org/src/$1/$FILENAME || exit -1
+    tar xvf $FILENAME || exit -1 
+    cd $DIR_NAME || exit -1
     ./autogen.sh --prefix=$PREFIX || exit -1
     make -j`nproc` || exit -1
     sudo make -j`nproc` install || exit -1
@@ -39,9 +48,20 @@ fi
 
 #install prerequisities
 echo -e "Installing prerequisities from apt-get..."
-sudo apt-get install libtool autotools pkg-config gtk-doc-tools libglib-2.0.0 libglib-2.0-dev
+sudo apt-get install --yes libtool autotools-dev pkg-config gtk-doc-tools libglib2.0-0 libglib2.0-dev \
+    autopoint autoconf libtool libbison-dev flex x264 libx264-dev x265 libx265-dev \
+    build-essential freeglut3 freeglut3-dev libgles2-mesa-dev \
+    libgles1-mesa-dev liborc-0.4.0 liborc-0.4-dev libav-tools-links libav-tools \
+    yasm || exit -1
 
 GSTREAMER_DIR=gstreamerInstall
+if [ -d $GSTREAMER_DIR ]; then 
+    hecho "============================================================"
+    hecho "Removing already existing gstreamerInstall dir"
+    hecho "============================================================"
+    rm -r $GSTREAMER_DIR
+fi
+
 mkdir $GSTREAMER_DIR
 cd $GSTREAMER_DIR
 
