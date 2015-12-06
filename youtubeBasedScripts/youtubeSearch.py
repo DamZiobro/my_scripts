@@ -1,14 +1,12 @@
-#!/usr/bin/python 
-import urllib
-import urllib2
-from bs4 import BeautifulSoup
-import sys
+#!/usr/bin/python3
+import urllib.request
+import urllib.parse
+import re
+import sys 
 
-textToSearch = "%20".join(sys.argv[1:]).strip()
-query = urllib.quote(textToSearch)
-url = "https://www.youtube.com/results?search_query=" + query
-response = urllib2.urlopen(url)
-html = response.read()
-soup = BeautifulSoup(html)
-for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}):
-    print 'https://www.youtube.com' + vid['href']
+textToSearch = " ".join(sys.argv[1:]).strip()
+query_string = urllib.parse.urlencode({"search_query" : textToSearch})
+html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
+search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
+for result in search_results:
+    print("http://www.youtube.com/watch?v=" + result)
