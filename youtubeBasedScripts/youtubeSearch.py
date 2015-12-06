@@ -1,11 +1,14 @@
 #!/usr/bin/python 
+import urllib
+import urllib2
+from bs4 import BeautifulSoup
+import sys
 
-import urllib, json
-import sys 
-
-inp = urllib.urlopen(r'http://gdata.youtube.com/feeds/api/videos?q=rodowicz+rozmowa+przez+ocean&max-results=1&alt=json&orderby=viewCount')
-resp = json.load(inp)
-inp.close()
-first = resp['feed']['entry'][0]
-print first['title'] # video title
-print first['link'][0]['href'] #url
+textToSearch = "%20".join(sys.argv[1:]).strip()
+query = urllib.quote(textToSearch)
+url = "https://www.youtube.com/results?search_query=" + query
+response = urllib2.urlopen(url)
+html = response.read()
+soup = BeautifulSoup(html)
+for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}):
+    print 'https://www.youtube.com' + vid['href']
