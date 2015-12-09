@@ -1,0 +1,16 @@
+#!/bin/bash 
+
+FILENAME="$1"
+if [ $# != 1 ]
+then
+        echo -e "Usage: $0 filename"
+        FILENAME="vim"
+fi
+
+/usr/bin/vim.default -n -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':xa' "$1"
+mv "$1".html /var/www/html/
+for ipaddr in `ipaddrs`
+do
+        echo "firefox http://$ipaddr/$1.html"
+done
+
