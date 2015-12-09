@@ -3,6 +3,8 @@
 # gendoc
 # Author: Damian Ziobro <damian@xmementoit.com>
 
+source $HOME/.dotfiles/bash_functions
+
 abspath() {                                               
     builtin cd "$(dirname "$1")"
     printf "%s/%s\n" "$(pwd)" "$(basename "$1")"
@@ -67,6 +69,9 @@ if [[ `cat $DOXYFILE | tail -n1` == INPUT* ]]; then head -n -3 $DOXYFILE > /tmp/
 #if [ ! -z $BROWSER ]; then 
     xdg-open $DOC_DIR/html/index.html 
 #fi
+
+gotoDoc $BROWSER
+
 echo -e "===================================================================="
 echo -e "Documentation for source code from dir ===> '$SOURCE_DIR' <=== built successfully..."
 echo -e "Documentation root file is: $DOC_DIR/html/index.html"
