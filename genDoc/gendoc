@@ -70,7 +70,7 @@ if [[ `cat $DOXYFILE | tail -n1` == INPUT* ]]; then head -n -3 $DOXYFILE > /tmp/
     xdg-open $DOC_DIR/html/index.html 
 #fi
 
-gotoDoc $BROWSER
+gotoApp $BROWSER
 
 echo -e "===================================================================="
 echo -e "Documentation for source code from dir ===> '$SOURCE_DIR' <=== built successfully..."
