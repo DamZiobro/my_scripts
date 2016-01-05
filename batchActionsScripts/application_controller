@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CHECKINGPERIOD=2                  # in sec
-MYEMAIL="ziobro.damian@gmail.com"           # where to send info
+MYEMAIL="$MAILTO"           # where to send info
 
 APPLICATION_NAME=$1
 MAILSTOP=0                         # switcher for mail sending
