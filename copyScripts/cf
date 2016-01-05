@@ -15,17 +15,18 @@
 #WARNING!!!! 
 #This script works only with tmux vi-based keys mode 
 
-LINE_NUMBER=2
+LINE_NUMBER=3
 if [ $# == 1 ];
 then
     # check if line_number is really number or regex or substring
     re='^[0-9]+$'
     if ! [[ $1 =~ $re ]] ; 
     then
+        LINE_NUMBER=$(($1+1))
         tmux copy-mode \; send-keys ? $1 Enter n Space w h h 
         #echo "error: Not a number" >&2; exit 1
     else 
-        LINE_NUMBER=$(($1+1))
+        LINE_NUMBER=$(($1+2))
         #echo $LINE_NUMBER 
         tmux copy-mode \; send-keys $LINE_NUMBER k h Space b 
     fi
@@ -33,6 +34,6 @@ else
     tmux copy-mode \; send-keys $LINE_NUMBER k h Space b 
 fi
 
-COPIED_STRING=`tmux show-buffer -b 0`
+COPIED_STRING=`tmux show-buffer`
 echo $COPIED_STRING
 

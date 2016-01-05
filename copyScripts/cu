@@ -26,7 +26,7 @@ MAX_STEP_NUMBER=200
 SEARCH_TEXT=$1
 
 #getting line number if line number mode or NON_NUMBER if text mode
-LINE_NUMBER=1
+LINE_NUMBER=2
 if [ $# == 1 ];
 then 
     re='^[0-9]+$'
@@ -83,7 +83,7 @@ do
                 #quote characters (' or ") around him. Therefore we will remove quotes
                 tmux send-keys b l Space w h h h Enter 
             fi
-            COPIED_STRING=`tmux show-buffer -b 0`
+            COPIED_STRING=`tmux show-buffer`
             #echo $COPIED_STRING
             let STEP_NUMBER=$((STEP_NUMBER+1))
             if [[ $COPIED_STRING == *"$SEARCH_TEXT"* ]]; then
@@ -113,12 +113,12 @@ do
             #now we know (after first step of while loop )that URL address has 
             #quote characters (' or ") around him. Therefore we will remove quotes
             tmux send-keys b l Space w h h h Enter 
-            COPIED_STRING=`tmux show-buffer -b 0`
+            COPIED_STRING=`tmux show-buffer`
             break;
         fi
     fi
 
-    COPIED_STRING=`tmux show-buffer -b 0`
+    COPIED_STRING=`tmux show-buffer`
     #echo "${COPIED_STRING}"
     #echo "$KEY"
     #if [ $KEY != Space ]; then
