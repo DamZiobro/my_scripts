@@ -129,7 +129,7 @@ to configure at the beginning of script code:
 * <i> OPTIONS </i> - additional options of SSH connection
 
 <b>Usage: </b>
-```connectSSHFSRemoteResource```
+```connectSSHFSRemoteResource ```
 This usage will connect remote resources according to SERVER_USER, SERVER_IP,
 SERVER_PATH configuration to selected MOUNT_POINT on local computer.
 
