@@ -4,6 +4,8 @@
 MONITOR_X_SIZE=1920
 MOUSE_X=$((`xdotool getmouselocation | cut -d' ' -f1 | cut -d: -f2`))
 
+echo "Toggeling monitors - MOUSE_X: $MOUSE_X..." | logger -t $(basename $0)
+
 if [ $MOUSE_X -gt $MONITOR_X_SIZE ];
 then 
     xdotool mousemove_relative -- -$MONITOR_X_SIZE 0 
@@ -13,8 +15,9 @@ fi
 
 #get Id of window under the mouse cursor 
 sedGetValue='s".*=\(.*\)"\1"'
+echo -e "\$sedGetValue = $sedGetValue"  | logger -t $(basename $0)
 windowId=`xdotool getmouselocation --shell 2>/dev/null |grep WINDOW |sed "$sedGetValue"`
-#echo $windowId'"'
+echo $windowId'"' | logger -t `basename $0`
 
 #set focus on window under the mouse cursor
 xdotool windowfocus $windowId 
