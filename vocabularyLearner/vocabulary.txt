@@ -428,3 +428,5 @@ solitude > samotność
 temperance > wstrzemięźliwość
 sober > trzeźwy
 layoff > zwolnienie
+detrimental > szkodliwy
+unaccountable > niezrozumiały
