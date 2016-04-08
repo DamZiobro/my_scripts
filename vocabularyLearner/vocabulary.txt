@@ -428,6 +428,7 @@ solitude > samotność
 temperance > wstrzemięźliwość
 sober > trzeźwy
 layoff > zwolnienie
+<<<<<<< HEAD
 distinguish > wyróżniać
 infer > wywnioskować
 dispute > spierać się
@@ -449,3 +450,5 @@ overhaul > remont
 vast > ogromny
 surpass > przewyższyć
 tangible > namacalny
+detrimental > szkodliwy
+unaccountable > niezrozumiały
