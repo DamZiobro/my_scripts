@@ -11,7 +11,7 @@ for dotFile in dotFiles:
     #convert only renderPipeline files 
     #if("renderPipeline" in dotFile):
     print "Converting file: " + dotFile
-    pngBasename = dotFile.split('.')[-2]
+    pngBasename = dotFile
     command  = "dot " + dotFile + " -Tpng -o " + directory + "/" + pngBasename + ".png"
     os.system(command) 
 
