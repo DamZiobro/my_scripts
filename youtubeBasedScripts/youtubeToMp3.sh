@@ -9,6 +9,7 @@
 
 INPUT_FILE=$1
 LINKS_FILE=/tmp/links
+OUTPUT_DIR=$PWD
 
 if [ $# != 1 ]; then 
   echo -e "ERROR: wrong arguments number"
@@ -22,10 +23,9 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
-echo -e "Getting youtube URLs for selected songs..."
 #Getting youtube links for files
 cat $INPUT_FILE | while read LINE; do 
-   echo -e "  - searching URL fror song: $LINE"
+   echo -e "  - searching URL for song: $LINE"
   link=$(youtubeSearch.py $LINE | head -n1);
   LINE=$(echo $LINE | tr ' -' '_')
   echo "$LINE#$link" >> $LINKS_FILE
@@ -35,8 +35,14 @@ done
 cat $LINKS_FILE | while read LINE; do 
   TITLE=$(echo $LINE | cut -d'#' -f 1)
   LINK=$(echo $LINE | cut -d'#' -f 2)
-  echo "Downloading mp3 for title: $TITLE"
-  youtube-dl $LINK --extract-audio --audio-format mp3 --audio-quality 0 -o ${TITLE}.mp3
+  echo " - downloading mp3 for title: $TITLE"
+  youtube-dl $LINK --extract-audio --audio-format mp3 --audio-quality 0 -o ${OUTPUT_DIR}/${TITLE}.mp3
+done
+
+for file in $(ls $OUTPUT_DIR); do
+  echo " - converting mkv to mp3 for title: ${OUTPUT_DIR}/$file"
+  ffmpeg -i ${OUTPUT_DIR}/$file -c:a libmp3lame ${OUTPUT_DIR}/${file}.mp3
+  rm ${OUTPUT_DIR}/$file
 done
 
 rm $LINKS_FILE
