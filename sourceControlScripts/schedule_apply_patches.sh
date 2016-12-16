@@ -36,7 +36,9 @@ for patch_file in $(cat $PATCHES_DIR/series); do
   
   schedule_file=/tmp/${patch_file}
 
-  DATE_OF_COMMIT=$(git log --format="%s %ci" | grep "$patch_message" | cut -d' ' -f2-3)
+  DATE_OF_COMMIT=$(git log --format="|%s| %ci" | grep "$patch_message" | cut -d '|' -f3 | cut -d' ' -f2-3)
+  echo -e "   - DATE_OF_COMMIT: $DATE_OF_COMMIT" | $LOGGER
+  #continue
   DATE_OF_COMMIT_EPOCH=$(date --date="$DATE_OF_COMMIT" +%s)
   if [ "$DATE_OF_COMMIT_EPOCH" == "" ]; then 
     echo -e "Cannot get commit name" | $LOGGER -l ERROR
@@ -60,8 +62,8 @@ for patch_file in $(cat $PATCHES_DIR/series); do
 
   #always add 5 mins before apply first commit changes
 
-  #scheduling patc
-  #DIFF_SEC=$(($RANDOM%60))
+  #additional randomness with seconds
+  DIFF_SECS=$((DIFF_SECS+$(($RANDOM%30))))
 
   echo "cd $GIT_REPO_DIR" > $schedule_file | $LOGGER
   echo "sleep $DIFF_SECS" >> $schedule_file | $LOGGER
