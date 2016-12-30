@@ -20,3 +20,7 @@ iptables -A syn-flood -m limit --limit 30/s --limit-burst 60 -j RETURN
 iptables -A syn-flood -j LOG --log-level 4 --log-prefix 'SYN-flood attempt: '
 iptables -A syn-flood -j DROP
 
+#
+# #########################
+# allow only 1 ssh connection per minute from the IP address
+iptables -I INPUT -m hashlimit -m tcp -p tcp --dport 22 --hashlimit 1/min  --hashlimit-mode srcip --hashlimit-name ssh -m state --state NEW -j ACCEPT
