@@ -16,6 +16,7 @@ IFS=">"
 set $CHOOSEN_VOCABULARY
 
 #visual notification
+echo "$1 - $2" 
 notify-send -t 8000 -i system-users "$1 - $2" "Vocabulary notifier"
 
 #voice notification
