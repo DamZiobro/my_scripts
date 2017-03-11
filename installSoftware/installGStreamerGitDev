@@ -8,10 +8,10 @@ hecho () {
 
 function installGStreamerComponent {
     hecho "============================================================"
-    hecho "Installing $1"
+    hecho "Installing $1 branch $2"
     hecho "============================================================"
 
-    git clone git://anongit.freedesktop.org/gstreamer/$1 || exit -1
+    git clone git://anongit.freedesktop.org/gstreamer/$1 --branch $2 || exit -1
     cd $1 || exit -1
     ./autogen.sh --prefix=$PREFIX || exit -1
     make -j`nproc` || exit -1
@@ -20,7 +20,7 @@ function installGStreamerComponent {
 }
 
 
-if [ $# == 1 ];
+if [ $# -ge 1 ];
 then 
     if [ $1 == "-h" ];
     then 
@@ -29,22 +29,31 @@ then
         exit -1
     fi
 
-    echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
-    sudo rm -r /usr/local/include/gstreamer-1.0
-    cd /usr/local/lib 
-    sudo rm -r gstreamer-1.0 libgst*
-    cd -
+    if [ "$1" == "1" ]; then
+      echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
+      sudo rm -r /usr/local/include/gstreamer-1.0
+      cd /usr/local/lib 
+      sudo rm -r gstreamer-1.0 libgst*
+      cd -
+    elif [ ! -z $1 ]; then 
+      echo -e "Selected GStreamer tag: $1"
+      branch=$1
+    fi
 fi
+
+branch=${branch:-"master"}
+
+echo -e "Installing branch name $branch"
 
 GSTREAMER_DIR=gstreamerInstall
 mkdir $GSTREAMER_DIR
 cd $GSTREAMER_DIR
 
-installGStreamerComponent gstreamer
-installGStreamerComponent gst-plugins-base
-installGStreamerComponent gst-plugins-good 
-installGStreamerComponent gst-plugins-bad 
-installGStreamerComponent gst-plugins-ugly 
-installGStreamerComponent gst-rtsp-server 
-installGStreamerComponent gst-libav 
+installGStreamerComponent gstreamer $branch
+installGStreamerComponent gst-plugins-base $branch
+installGStreamerComponent gst-plugins-good  $branch
+installGStreamerComponent gst-plugins-bad  $branch
+installGStreamerComponent gst-plugins-ugly  $branch
+installGStreamerComponent gst-rtsp-server  $branch
+installGStreamerComponent gst-libav  $branch
 
