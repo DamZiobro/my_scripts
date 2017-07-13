@@ -55,7 +55,7 @@ sudo apt-get install --yes libtool autotools-dev pkg-config gtk-doc-tools libgli
     autopoint autoconf libtool libbison-dev flex x264 libx264-dev \
     build-essential freeglut3 freeglut3-dev libgles2-mesa-dev \
     libgles1-mesa-dev liborc-0.4.0 liborc-0.4-dev libav-tools \
-    yasm faac librtmp1 librtmp-dev || exit -1
+    yasm faac librtmp1 librtmp-dev libfaac-dev || exit -1
 
 GSTREAMER_DIR=gstreamerInstall
 if [ -d $GSTREAMER_DIR ]; then 
