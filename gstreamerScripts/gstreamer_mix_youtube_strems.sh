@@ -1,14 +1,12 @@
 #! /bin/bash
 #
-# gst_stream_live.sh
+# Script mixes 2 youtube live chaannels into 1 new live stream: 2 youtube inputs - 1 for video + 1 for audio
+# Author: Damian Ziobro <damian@xmementoit.com>
 
-# Streaming as expected (2 youtube inputs - 1 for video + 1 for audio) 
-# PIPELINE REQUIRES node-youtubeStreamer for work (https://github.com/licson0729/node-YouTubeStreamer)
 YOUTUBE_URL='https://www.youtube.com/watch?v=y60wDzZt8yg'
 echo -e "Getting youtube playable URL for video input from this URL: $YOUTUBE_URL"
 YOUTUBE_BEST_FORMAT=$(youtube-dl --list-formats $YOUTUBE_URL | tail -n 1 | cut -d' ' -f 1)
 YOUTUBE_PLAYABLE_HLS_URL="$(youtube-dl -f $YOUTUBE_BEST_FORMAT -g $YOUTUBE_URL)"
-#YOUTUBE_PLAYABLE_HLS_URL="http://208.43.120.148:5000/live/116/116.m3u8"
 
 YOUTUBE_AUDIO_URL='https://www.youtube.com/watch?v=AL-5nP9efIU'
 echo -e "Getting youtube playable URL for audio input from this URL: $YOUTUBE_AUDIO_URL"
