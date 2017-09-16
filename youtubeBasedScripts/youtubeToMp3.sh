@@ -39,7 +39,8 @@ cat $LINKS_FILE | while read LINE; do
   youtube-dl $LINK --extract-audio --audio-format mp3 --audio-quality 0 -o ${OUTPUT_DIR}/${TITLE}.mp3
 done
 
-for file in $(ls $OUTPUT_DIR); do
+INPUT_FILES=$(ls $OUTPUT_DIR)
+for file in $INPUT_FILES; do
   echo " - converting mkv to mp3 for title: ${OUTPUT_DIR}/$file"
   ffmpeg -i ${OUTPUT_DIR}/$file -c:a libmp3lame ${OUTPUT_DIR}/${file}.mp3
   rm ${OUTPUT_DIR}/$file

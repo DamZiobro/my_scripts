@@ -1,4 +1,5 @@
 #!/bin/bash 
+# Copyright© 2017 Damian Ziobro <damian@xmementoit.com>
 
 PREFIX=/usr/local 
 
@@ -8,54 +9,61 @@ hecho () {
 
 function installGStreamerComponent {
     hecho "============================================================"
-    hecho "Installing $1"
+    hecho "Installing $1 branch $2"
     hecho "============================================================"
 
-    DIR_NAME="$1-$2"
-    FILENAME="$DIR_NAME.tar.xz"
-    if [ -f "$FILENAME" ]; then 
-        rm -f $FILENAME
+    if [ ! -z $3 ]; then 
+      DIR_NAME=$1
+      mkdir $DIR_NAME
+      cd $DIR_NAME
+      wget $3 || exit -1
+      tar xjf $(basename $3) 
+    else 
+      git clone git://anongit.freedesktop.org/gstreamer/$1 --branch $2 || exit -1
+      cd $1 || exit -1
+      ./autogen.sh --prefix=$PREFIX || exit -1
+      make -j`nproc` || exit -1
+      sudo make -j`nproc` install || exit -1
+      cd ..
     fi
-    if [ -d "$DIR_NAME" ]; then 
-        rm -rf $DIR_NAME
-    fi
-
-    wget http://gstreamer.freedesktop.org/src/$1/$FILENAME || exit -1
-    tar xvf $FILENAME || exit -1 
-    cd $DIR_NAME || exit -1
-    ./autogen.sh --prefix=$PREFIX || exit -1
-    make -j`nproc` || exit -1
-    sudo make -j`nproc` install || exit -1
-
-    sudo ldconfig /usr/locla/lib
-
-    cd ..
 }
 
-if [ $1 == "-h" ];
-then 
-    echo -e "Usage: installGStreamerVersion version [1]"
-    echo -e "           version - version of software which you would like to install ex. 1.4.4"
-    echo -e "           1       - optional parameter. If set, then previously installed GStreamer libraries will be removed before installation new version"
-    exit -1
-fi
 
-if [ $# == 2 ];
+if [ $# -ge 1 ];
 then 
-    echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
-    sudo rm -r /usr/local/include/gstreamer-1.0
-    cd /usr/local/lib 
-    sudo rm -r gstreamer-1.0 libgst*
-    cd -
+    if [ $1 == "-h" ];
+    then 
+        echo -e "Usage: $(basename $0) version [1]"
+        echo -e "           version - version of software which you would like to install ex. 1.4.4"
+        echo -e "           1       - optional parameter. If set, then previously installed GStreamer libraries will be removed before installation new version"
+        exit -1
+    fi
+
+    if [ "$2" == "1" ]; then
+      echo -e "Removing preinstalled libraries and includes from /usr/local/include and /usr/local/lib"  
+      sudo rm -r /usr/local/include/gstreamer-1.0
+      cd /usr/local/lib 
+      sudo rm -r gstreamer-1.0 libgst*
+      cd -
+    fi 
+
+    if [ ! -z $1 ]; then 
+      echo -e "Selected GStreamer tag: $1"
+      branch=$1
+    fi
 fi
 
 #install prerequisities
-echo -e "Installing prerequisities from apt-get..."
+hecho "Installing prerequisities from apt-get..."
 sudo apt-get install --yes libtool autotools-dev pkg-config gtk-doc-tools libglib2.0-0 libglib2.0-dev \
     autopoint autoconf libtool libbison-dev flex x264 libx264-dev \
     build-essential freeglut3 freeglut3-dev libgles2-mesa-dev \
     libgles1-mesa-dev liborc-0.4.0 liborc-0.4-dev libav-tools \
-    yasm || exit -1
+    yasm faac librtmp1 librtmp-dev libfaac-dev || exit -1
+
+branch=${branch:-"master"}
+
+hecho "Installing branch name $branch"
 
 GSTREAMER_DIR=gstreamerInstall
 if [ -d $GSTREAMER_DIR ]; then 
@@ -64,15 +72,15 @@ if [ -d $GSTREAMER_DIR ]; then
     hecho "============================================================"
     rm -r $GSTREAMER_DIR
 fi
-
 mkdir $GSTREAMER_DIR
 cd $GSTREAMER_DIR
 
-installGStreamerComponent gstreamer $1
-installGStreamerComponent gst-plugins-base $1
-installGStreamerComponent gst-plugins-good $1 
-installGStreamerComponent gst-plugins-bad $1 
-installGStreamerComponent gst-plugins-ugly $1 
-installGStreamerComponent gst-rtsp-server $1 
-installGStreamerComponent gst-libav $1 
+installGStreamerComponent gstreamer $branch
+installGStreamerComponent gst-plugins-base $branch
+installGStreamerComponent gst-plugins-good  $branch
+installGStreamerComponent gst-plugins-bad  $branch
+installGStreamerComponent gst-plugins-ugly  $branch
+installGStreamerComponent gst-rtsp-server  $branch
+installGStreamerComponent gst-libav  $branch
+installGStreamerComponent gst-android $1 https://gstreamer.freedesktop.org/data/pkg/android/1.12.2/gstreamer-1.0-android-universal-1.12.2.tar.bz2
 

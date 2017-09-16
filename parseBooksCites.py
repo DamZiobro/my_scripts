@@ -15,8 +15,16 @@ if __name__ == "__main__":
     try:
         config = configparser.ConfigParser(allow_no_value=True)
         config.read(BOOKS_CITES_FILE)
-        selectedBook = random.choice(config.sections())
-        selectedCite = random.choice(list(dict(config[selectedBook].items()).keys()))
+        allbooks = [section for section in config.sections()]
+        allcites = []
+        for book in allbooks:
+            for cite in list(dict(config[book].items()).keys()):
+                allcites.append([cite,book])
+        #print (allcites)
+        selectedDict = random.choice(allcites)
+        selectedCite = selectedDict[0]
+        selectedBook = selectedDict[1]
+        #print (selectedCite)
 
         #remove first 2 chars ('- ')
         selectedCite = selectedCite[2:]
