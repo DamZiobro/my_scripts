@@ -28,6 +28,7 @@ cat $INPUT_FILE | while read LINE; do
    echo -e "  - searching URL for song: $LINE"
   link=$(youtubeSearch.py $LINE | head -n1);
   LINE=$(echo $LINE | tr ' -' '_')
+  echo "\n\nyoutube_link $link\n\n"
   echo "$LINE#$link" >> $LINKS_FILE
 done
 

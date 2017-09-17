@@ -12,6 +12,7 @@ Getting youtube videos to selected Mp3
 import os, re
 import urllib, json
 import sys 
+import requests
 
 def getYoutubeUrl(splitWords):
     """docstring for getYoutubeUrl"""
@@ -21,20 +22,24 @@ def getYoutubeUrl(splitWords):
     #remove last character
     questionString = questionString[:-1]
 
-    inp = urllib.urlopen(r'http://gdata.youtube.com/feeds/api/videos?q='+questionString+'&max-results=1&alt=json')
-    resp = json.load(inp)
-    inp.close()
+    API_KEY="YOUR_API_KEY"
+
+    url=r'https://www.googleapis.com/youtube/v3/search?q='+questionString+'&max-results=1&alt=json&part=id&key='+API_KEY
+    r = requests.get(url)
+    print "URL: " + url
+    #print "r.text: " + str(r.text)
+    resp = json.loads(r.text)
     try:
-        first = resp['feed']['entry'][0]
-        print first['title'] # video title
-        return first['link'][0]['href'].split('&')[0] 
+        first = resp['items'][0]['id']
+        #print first
+        return "https://www.youtube.com/watch?v="+unicode(first['videoId'])
     except: 
         return None
 
 
 def splitLineToYoutubeQuesion(line):
     """docstring for splitLineToYoutubeQuesion"""
-    splitWords = re.split(' - | ', line);
+    splitWords = re.split(' - | ', line.rstrip());
     return splitWords
 
 
@@ -44,6 +49,9 @@ def readSongsFromFile(file):
         songsLines = f.readlines();
     return songsLines
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 songsLines = readSongsFromFile(sys.argv[1])
 areAnyNotDownloaded = 0
@@ -53,9 +61,12 @@ for song in songsLines:
     print splitWords
 
     youtubeUrl = getYoutubeUrl(splitWords)
-    print youtubeUrl
+    print "youtubeURL: " + youtubeUrl
     if not youtubeUrl == None:
-        os.system("youtubeToMp3 " + youtubeUrl);
+        out = song.replace(' ', "_").replace('-', "_").rstrip() + ".%\(ext\)s"
+        cmd = "youtube-dl --extract-audio --audio-format mp3 -o " + out + " " + youtubeUrl 
+        print "CMD: " + cmd
+        os.system(cmd);
     else:
         areAnyNotDownloaded = 1;
         notDownloadedFile = open("notDownloaded.txt", "a");
