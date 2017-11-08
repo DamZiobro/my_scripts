@@ -26,6 +26,7 @@ function installGStreamerComponent {
       sudo make -j`nproc` install || exit -1
       cd ..
     fi
+    sudo ldconfig $PREFIX/lib
 }
 
 
@@ -75,6 +76,9 @@ fi
 mkdir $GSTREAMER_DIR
 cd $GSTREAMER_DIR
 
+echo -e "REMOVING PREVIOUS GSTREAMER FILES"
+sudo rm -rf /usr/local/lib/libgst* /usr/local/lib/gstreamer-1.0 &> /dev/null
+
 installGStreamerComponent gstreamer $branch
 installGStreamerComponent gst-plugins-base $branch
 installGStreamerComponent gst-plugins-good  $branch
@@ -82,5 +86,5 @@ installGStreamerComponent gst-plugins-bad  $branch
 installGStreamerComponent gst-plugins-ugly  $branch
 installGStreamerComponent gst-rtsp-server  $branch
 installGStreamerComponent gst-libav  $branch
-installGStreamerComponent gst-android $1 https://gstreamer.freedesktop.org/data/pkg/android/1.12.2/gstreamer-1.0-android-universal-1.12.2.tar.bz2
+installGStreamerComponent gst-android $1 https://gstreamer.freedesktop.org/data/pkg/android/$branch/gstreamer-1.0-android-universal-${branch}.tar.bz2
 
