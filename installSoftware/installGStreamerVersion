@@ -20,8 +20,14 @@ function installGStreamerComponent {
       tar xjf $(basename $3) 
     else 
       git clone git://anongit.freedesktop.org/gstreamer/$1 --branch $2 || exit -1
+      opts="--disable-gtk-doc --disable-gtk-doc-html --disable-docbook --disable-gtk-doc-pdf"
+
+      if [ $1 == "gst-plugins-bad" ]; then
+        opts="$opts --disable-qt"
+      fi
+
       cd $1 || exit -1
-      ./autogen.sh --prefix=$PREFIX || exit -1
+      ./autogen.sh --prefix=$PREFIX $opts || exit -1
       make -j`nproc` || exit -1
       sudo make -j`nproc` install || exit -1
       cd ..
