@@ -22,7 +22,7 @@ def getYoutubeUrl(splitWords):
     #remove last character
     questionString = questionString[:-1]
 
-    API_KEY="YOUR_API_KEY"
+    API_KEY=os.getenv("YOUTUBE_API_KEY")
 
     url=r'https://www.googleapis.com/youtube/v3/search?q='+questionString+'&max-results=1&alt=json&part=id&key='+API_KEY
     r = requests.get(url)
