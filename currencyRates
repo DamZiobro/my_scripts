@@ -31,7 +31,7 @@ if __name__ == "__main__":
         r = requests.get(CURR_URL)
         data = r.text
 
-        soup = BeautifulSoup(data)
+        soup = BeautifulSoup(data, "html5lib")
         currrates = soup.find('span', attrs={'class': 'uccResultAmount'})
         if currrates is None:
             print "ERROR: cannot get exchange from " \
