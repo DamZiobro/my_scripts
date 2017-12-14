@@ -1,0 +1,48 @@
+#! /bin/bash
+#
+# mount_old_home.sh
+# 
+# Script allows to mount ecryptfs (ex. old home dir) into /mnt/old_home
+
+# ROOT should be the parent of the .ecryptfs and .Private folders
+if [ $# != 1 ]; then 
+  echo -e "ERROR: wrong arguments"
+  echo -e "Usage $(basename $0) root_dir"
+  echo -e "      root_dir - dir containing .ecryptfs and .Private folders"
+  exit -1 
+fi
+ROOT=$1
+TARGET=/mnt/old_home
+
+
+sudo mkdir -p $TARGET
+cd $ROOT
+
+echo Type your password:
+PASS=$(ecryptfs-unwrap-passphrase .ecryptfs/wrapped-passphrase | sed s/Passphrase:\ //)
+SIG1=$(head -n1 .ecryptfs/Private.sig)
+SIG2=$(tail -n1 .ecryptfs/Private.sig)
+
+echo Passphrase:
+echo $PASS
+echo Signatures:
+echo $SIG1
+echo $SIG2
+
+echo Should be empty:
+sudo keyctl clear @u
+sudo keyctl list @u
+
+echo Do not type anything:
+echo $PASS | sudo ecryptfs-add-passphrase --fnek
+
+echo Sould have signatures:
+sudo keyctl list @u
+
+echo Mounting $ROOT on $TARGET...
+sudo mount -t ecryptfs -o key=passphrase,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=no,ecryptfs_enable_filename_crypto=yes,ecryptfs_sig=$SIG1,ecryptfs_fnek_sig=$SIG2,passwd=$(echo $PASS) .Private $TARGET
+
+ls $TARGET
+
+unset -v PASS
+
