@@ -23,7 +23,7 @@ function installGStreamerComponent {
       opts="--disable-gtk-doc --disable-gtk-doc-html --disable-docbook --disable-gtk-doc-pdf"
 
       if [ $1 == "gst-plugins-bad" ]; then
-        opts="$opts --disable-qt"
+        opts="$opts --disable-qt --disable-gl"
       fi
 
       cd $1 || exit -1
@@ -65,7 +65,7 @@ hecho "Installing prerequisities from apt-get..."
 sudo apt-get install --yes libtool autotools-dev pkg-config gtk-doc-tools libglib2.0-0 libglib2.0-dev \
     autopoint autoconf libtool libbison-dev flex x264 libx264-dev \
     build-essential freeglut3 freeglut3-dev libgles2-mesa-dev \
-    libgles1-mesa-dev liborc-0.4.0 liborc-0.4-dev libav-tools \
+    liborc-0.4.0 liborc-0.4-dev libav-tools \
     yasm faac librtmp1 librtmp-dev libfaac-dev || exit -1
 
 branch=${branch:-"master"}
@@ -77,7 +77,7 @@ if [ -d $GSTREAMER_DIR ]; then
     hecho "============================================================"
     hecho "Removing already existing gstreamerInstall dir"
     hecho "============================================================"
-    rm -r $GSTREAMER_DIR
+    rm -rf $GSTREAMER_DIR
 fi
 mkdir $GSTREAMER_DIR
 cd $GSTREAMER_DIR
@@ -92,5 +92,5 @@ installGStreamerComponent gst-plugins-bad  $branch
 installGStreamerComponent gst-plugins-ugly  $branch
 installGStreamerComponent gst-rtsp-server  $branch
 installGStreamerComponent gst-libav  $branch
-installGStreamerComponent gst-android $1 https://gstreamer.freedesktop.org/data/pkg/android/$branch/gstreamer-1.0-android-universal-${branch}.tar.bz2
+#installGStreamerComponent gst-android $1 https://gstreamer.freedesktop.org/data/pkg/android/$branch/gstreamer-1.0-android-universal-${branch}.tar.bz2
 
