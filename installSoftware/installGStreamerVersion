@@ -65,8 +65,8 @@ hecho "Installing prerequisities from apt-get..."
 sudo apt-get install --yes libtool autotools-dev pkg-config gtk-doc-tools libglib2.0-0 libglib2.0-dev \
     autopoint autoconf libtool libbison-dev flex x264 libx264-dev \
     build-essential freeglut3 freeglut3-dev libgles2-mesa-dev \
-    liborc-0.4.0 liborc-0.4-dev ffmpeg \
-    yasm faac librtmp1 librtmp-dev libfaac-dev || exit -1
+    liborc-0.4.0 liborc-0.4-dev ffmpeg libpulse-dev \
+    yasm faac librtmp1 librtmp-dev libfaac-dev libfaad-dev || exit -1
 
 branch=${branch:-"master"}
 
