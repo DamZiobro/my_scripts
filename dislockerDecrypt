@@ -1,0 +1,11 @@
+#! /bin/bash
+#
+# decryptusb
+
+sudo mkdir -p /mnt/dislocker /mnt/tmp
+sudo dislocker -v -V /dev/sdb1 -u -- /mnt/tmp || exit -1
+sudo mount -o loop,rw /mnt/tmp/dislocker-file /media/dislocker/ || exit -1
+
+echo -e "Pendrive successfully mounted into /media/dislocker"
+
+
