@@ -19,7 +19,7 @@ function installGStreamerComponent {
       wget $3 || exit -1
       tar xjf $(basename $3) 
     else 
-      git clone git://anongit.freedesktop.org/gstreamer/$1 --branch $2 || exit -1
+      git clone git://github.com/GStreamer/$1 --branch $2 || exit -1
       opts="--disable-gtk-doc --disable-gtk-doc-html --disable-docbook --disable-gtk-doc-pdf"
 
       if [ $1 == "gst-plugins-bad" ]; then
