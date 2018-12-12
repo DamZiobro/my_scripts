@@ -37,7 +37,7 @@ if __name__ == "__main__":
             print "ERROR: cannot get exchange from " \
                   "{0} to {1}".format(currpair[0], currpair[1])
         else:
-            print "{} <=> {}: {:0.2f}".format(currpair[0], currpair[1], \
+            print "{} <=> {}: {:0.4f}".format(currpair[0], currpair[1], \
                                             float(str(currrates.text)))
 
         data = soup.find_all('script', {'type' : 'text/javascript'})
