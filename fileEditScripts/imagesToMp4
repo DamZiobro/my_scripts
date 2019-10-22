@@ -36,7 +36,8 @@ if [ $lastImageSeconds -gt 0 ]; then
   for i in $(seq 1 $nrOfCopies); do cp $lastFile ${lastFile}_${i}_.${GLOB_PATTERN##*.}; done
 fi
 
-ffmpeg -framerate $framerate -pattern_type glob -i "$GLOB_PATTERN" out.mp4
+#ffmpeg -framerate $framerate -pattern_type glob -i "$GLOB_PATTERN" out.mp4
+ffmpeg -r $framerate -pattern_type glob -i "$GLOB_PATTERN" -c:v libx264 -vf fps=8 -pix_fmt yuv420p out.mp4
 
 #removing copies of last file
 rm *_.${GLOB_PATTERN##*.};
